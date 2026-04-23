@@ -860,18 +860,38 @@ function stopAudio() {
 }
 let ttsEnabled=!!window.speechSynthesis;
 function speakText(text,onEnd){
-  if(!ttsEnabled||!window.speechSynthesis)return;
-  window.speechSynthesis.cancel();
-  const utt=new SpeechSynthesisUtterance(text);
-  utt.lang='${ttsLang}';utt.rate=0.85;utt.pitch=1.1;utt.volume=1;
-  const voices=window.speechSynthesis.getVoices();
-  const v=voices.find(x=>x.lang.startsWith('${ttsLang.split('-')[0]}')&&x.name.toLowerCase().includes('female'))
-          ||voices.find(x=>x.lang.startsWith('${ttsLang.split('-')[0]}'));
-  if(v)utt.voice=v;
-  utt.onend=()=>{setTTSStatus(TXT.ttsDone);if(onEnd)onEnd();};
-  utt.onerror=()=>{setTTSStatus(TXT.ttsError);};
-  window.speechSynthesis.speak(utt);
   setTTSStatus(TXT.ttsReading);
+  const runNativeTTS = () => {
+    if(!ttsEnabled||!window.speechSynthesis){ setTTSStatus(TXT.ttsError); if(onEnd)onEnd(); return; }
+    window.speechSynthesis.cancel();
+    const utt=new SpeechSynthesisUtterance(text);
+    utt.lang='${ttsLang}';utt.rate=0.85;utt.pitch=1.1;utt.volume=1;
+    const voices=window.speechSynthesis.getVoices();
+    const v=voices.find(x=>x.lang.startsWith('${ttsLang.split('-')[0]}')&&x.name.toLowerCase().includes('female'))
+            ||voices.find(x=>x.lang.startsWith('${ttsLang.split('-')[0]}'));
+    if(v)utt.voice=v;
+    utt.onend=()=>{setTTSStatus(TXT.ttsDone);if(onEnd)onEnd();};
+    utt.onerror=()=>{setTTSStatus(TXT.ttsError);if(onEnd)onEnd();};
+    window.speechSynthesis.speak(utt);
+  };
+
+  const tl = '${ttsLang}'.split('-')[0];
+  const url = 'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=' + tl + '&q=' + encodeURIComponent(text);
+  
+  if(currentAudio) { currentAudio.pause(); currentAudio.removeAttribute('src'); currentAudio.load(); currentAudio = null; }
+  currentAudio = new Audio(url);
+  currentAudio.onended = () => {
+      setTTSStatus(TXT.ttsDone);
+      if(onEnd) onEnd();
+  };
+  currentAudio.onerror = () => {
+      console.warn('Google TTS failed, falling back to window.speechSynthesis');
+      runNativeTTS();
+  };
+  currentAudio.play().catch(e => {
+      console.warn('Google TTS playback prevented', e);
+      runNativeTTS();
+  });
 }
 function speakQuestion(){
   if(!currentQ())return;
