@@ -1,0 +1,163 @@
+Câu 1: "Có bao nhiêu quả táo trong hình sau đây?" (Nghỉ 1 giây) "Một: 5 quả" (Nghỉ 0.5s) "Hai: 8 quả." (Nghỉ 0.5s) "Ba: 6 quả"
+Tuyệt vời! Đáp án đúng là số hai: 8 quả!"
+
+Câu 2: "10 quả dâu bớt đi 3 quả còn mấy quả dâu?" (Nghỉ 1 giây) "Một: 7 quả" (Nghỉ 0.5s) "Hai: 5 quả." (Nghỉ 0.5s) "Ba: 8 quả"
+Tuyệt vời! Đáp án đúng là số một: Bảy quả!"
+
+Câu 3: "Hình nào sau đây có bốn cạnh dài bằng nhau?" (Nghỉ 1 giây) "Một: Hình vuông" (Nghỉ 0.5s) "Hai: Hình tròn." (Nghỉ 0.5s) "Ba: Hình tam giác"
+Tuyệt vời! Đáp án đúng là số một: Hình vuông!"
+
+Câu 4: "Khối nào sau đây lăn được?" (Nghỉ 1 giây) "Một: Khối vuông" (Nghỉ 0.5s) "Hai: Khối chữ nhật." (Nghỉ 0.5s) "Ba: Khối cầu"
+Tuyệt vời! Đáp án đúng là số ba: Khối cầu!"
+
+Câu 5: "Con cá bơi dưới nước thở bằng gì?" (Nghỉ 1 giây) "Một: Bằng mang" (Nghỉ 0.5s) "Hai: Bằng mắt." (Nghỉ 0.5s) "Ba: Bằng miệng"
+Tuyệt vời! Đáp án đúng là số một: Bằng mang!"
+
+Câu 6: "Các con vật sau  đây, con nào có hai chân đẻ trứng?" (Nghỉ 1 giây) "Một: Gà trống" (Nghỉ 0.5s) "Hai: Gà mái." (Nghỉ 0.5s) "Ba: Con mèo"
+Tuyệt vời! Đáp án đúng là số hai: Gà mái!"
+
+Câu 7: "Đâu là thực phẩm thuộc nhóm chất đạm?" (Nghỉ 1 giây) "Một: Ngô, khoai" (Nghỉ 0.5s) "Hai: Cá, Thịt." (Nghỉ 0.5s) "Ba: Rau, củ, quả"
+Tuyệt vời! Đáp án đúng là số hai: Cá, Thịt!"
+
+
+Câu 8: "Những loại thực phẩm nào sau đây cung cấp nhiều chất béo?" (Nghỉ 1 giây) "Một: Ngô, khoai, gạo" (Nghỉ 0.5s) "Hai: Bơ, sữa, dầu ăn." (Nghỉ 0.5s) "Ba: Thịt, cá, tôm, trứng"
+Tuyệt vời! Đáp án đúng là số hai: Bơ, sữa, dầu ăn!"
+
+Câu 9: "Pha trộn màu đỏ với màu vàng sẽ được màu gì?" (Nghỉ 1 giây) "Một: Màu cam " (Nghỉ 0.5s) "Hai: Màu hồng ." (Nghỉ 0.5s) "Ba: Màu tím"
+Tuyệt vời! Đáp án đúng là số một: Màu cam !"
+
+Câu 10: "Vật nào sau đây sẽ nổi trong nước?" (Nghỉ 1 giây) "Một: Cành cây khô " (Nghỉ 0.5s) "Hai: Khối kim loại." (Nghỉ 0.5s) "Ba: Sỏi đá"
+Tuyệt vời! Đáp án đúng là số một: Cành cây khô!"
+
+Câu 11: "Cầu vồng có mấy màu?" (Nghỉ 1 giây) "Một: Chín màu " (Nghỉ 0.5s) "Hai: Bảy màu." (Nghỉ 0.5s) "Ba: Năm màu"
+Tuyệt vời! Đáp án đúng là số hai: Bảy màu!"
+
+Câu 12: "Hoa nào nở vào mùa hè?" (Nghỉ 1 giây) "Một: Hoa Phượng đỏ" (Nghỉ 0.5s) "Hai: Hoa Mai." (Nghỉ 0.5s) "Ba: Hoa hồng"
+Tuyệt vời! Đáp án đúng là số một: Hoa Phượng đỏ!"
+
+Câu 13: "Đâu là nguồn ánh sáng tự nhiên?" (Nghỉ 1 giây) "Một: Đèn điện" (Nghỉ 0.5s) "Hai: Mặt trời." (Nghỉ 0.5s) "Ba: Đèn dầu"
+Tuyệt vời! Đáp án đúng là số hai: Mặt trời!"
+
+Câu 14: "Trường mầm non Bắc Hà nằm  ở phường nào?" (Nghỉ 1 giây) "Một: Phường Bắc Hà" (Nghỉ 0.5s) "Hai: Phường Nguyễn Du." (Nghỉ 0.5s) "Ba: Phường Nam Hà"
+Tuyệt vời! Đáp án đúng là số một: Phường Bắc Hà!"
+
+Câu 15: "Đâu là biểu tượng của trường mầm non Bắc Hà?" (Nghỉ 1 giây) "Một: Ảnh số một" (Nghỉ 0.5s) "Hai: Ảnh số hai." (Nghỉ 0.5s) "Ba: Ảnh số ba"
+Tuyệt vời! Đáp án đúng là số hai: Ảnh số hai!"
+
+Câu 16: "Khi thấy đèn vàng người tham gia giao thông phải làm gì?" (Nghỉ 1 giây) "Một: Dừng lại" (Nghỉ 0.5s) "Hai: Chạy nhanh." (Nghỉ 0.5s) "Ba: Giảm tốc độ"
+Tuyệt vời! Đáp án đúng là số ba: Giảm tốc độ!"
+
+Câu 17: "Muốn đi qua đường cháu sẽ làm gì?" (Nghỉ 1 giây) "Một: Chạy nhanh qua đường" (Nghỉ 0.5s) "Hai: Nhẹ nhàng đi qua." (Nghỉ 0.5s) "Ba: Nhờ người lớn dắt qua"
+Tuyệt vời! Đáp án đúng là số ba: Nhờ người lớn dắt qua!"
+
+Câu 18: "Khi bị lạc con phải làm gì?" (Nghỉ 1 giây) "Một: Đi tìm bố mẹ hoặc nhờ người lạ đưa về nhà" (Nghỉ 0.5s) "Hai: Tìm công an nhờ gọi điện cho bố mẹ." (Nghỉ 0.5s) "Ba: Khóc lóc"
+Tuyệt vời! Đáp án đúng là số hai và ba: Tìm công an nhờ gọi điện cho bố mẹ!, Khóc lóc"
+
+Câu 19: "Quả nào sau đây có múi?" (Nghỉ 1 giây) "Một: Quả Cam" (Nghỉ 0.5s) "Hai: Quả chuối." (Nghỉ 0.5s) "Ba: Quả nhãn"
+Tuyệt vời! Đáp án đúng là số một: Quả Cam!"
+
+Câu 20: "Quả nào sau đây có một hạt?" (Nghỉ 1 giây) "Một: Quả xoài" (Nghỉ 0.5s) "Hai: Quả na." (Nghỉ 0.5s) "Ba: Quả mít"
+Tuyệt vời! Đáp án đúng là số một: Quả xoài!"
+
+Câu 21: "Màu đỏ trong tiếng anh đọc là gì?" (Nghỉ 1 giây) "Một: Red" (Nghỉ 0.5s) "Hai: Yellow." (Nghỉ 0.5s) "Ba: Blue"
+Tuyệt vời! Đáp án đúng là số một: Red!"
+
+Câu 22: "Đâu là số điện thoại báo cháy?" (Nghỉ 1 giây) "Một: 113" (Nghỉ 0.5s) "Hai: 114" (Nghỉ 0.5s) "Ba: 115"
+Tuyệt vời! Đáp án đúng là số hai: 114"
+
+Câu 23: "Điền số vào ô trống để hợp với quy luật đếm?" (Nghỉ 1 giây) "Một: Số 5" (Nghỉ 0.5s) "Hai: Số 3" (Nghỉ 0.5s) "Ba: Số 9"
+Tuyệt vời! Đáp án đúng là số một: Số 5"
+
+Câu 24: "Đồ dùng nào sau đây được làm bằng kim loại?" (Nghỉ 1 giây) "Một: Bát đĩa" (Nghỉ 0.5s) "Hai: Thìa." (Nghỉ 0.5s) "Ba: Cốc uống nước"
+Tuyệt vời! Đáp án đúng là số hai: Thìa"
+
+Câu 25: "Đâu là loại rác khó phân hủy?" (Nghỉ 1 giây) "Một: Vỏ chuối" (Nghỉ 0.5s) "Hai: Túi ni lông." (Nghỉ 0.5s) "Ba: Giấy "
+Tuyệt vời! Đáp án đúng là số hai: Túi ni lông"
+
+Câu 26: "Đâu là hình ảnh quốc kì Việt Nam?" (Nghỉ 1 giây) "Một: Nền đỏ, sao vàng 5 cánh" (Nghỉ 0.5s) "Hai: Nền trắng có hình tròn xanh đỏ." (Nghỉ 0.5s) "Ba: Nền sọc trắng, đỏ, góc trái có nhiều ngôi sao "
+Tuyệt vời! Đáp án đúng là số một: Nền đỏ, sao vàng 5 cánh"
+
+Câu 27: "Lăng Bác Hồ nằm ở địa danh nào sau đây?" (Nghỉ 1 giây) "Một: TP Đà Nẵng" (Nghỉ 0.5s) "Hai: TP Hồ Chí Minh." (Nghỉ 0.5s) "Ba: Thủ đô Hà Nội "
+Tuyệt vời! Đáp án đúng là số ba: Thủ đô Hà Nội"
+
+Câu 28: "Ngày sinh nhật Bác Hồ là ngày nào sau đây?" (Nghỉ 1 giây) "Một: Ngày 20 tháng 10" (Nghỉ 0.5s) "Hai: ngày 19 tháng 5."
+Tuyệt vời! Đáp án đúng là số hai: Ngày 19 tháng 5"
+
+Câu 29: "Ngày mồng 1 tháng 6 là ngày gì?" (Nghỉ 1 giây) "Một: Ngày Quốc tế lao động" (Nghỉ 0.5s) "Hai: Ngày Quốc tế thiếu nhi."
+Tuyệt vời! Đáp án đúng là số hai: Ngày Quốc tế thiếu nhi"
+
+Câu 30: "Từ “trời nắng” trong tiếng anh đọc như thế nào?" (Nghỉ 1 giây) "Một: Windy" (Nghỉ 0.5s) "Hai: Sunny." (Nghỉ 0.5s) "Ba: Cloudy "
+Tuyệt vời! Đáp án đúng là số hai: Sunny"
+
+Câu 31: "Người sinh ra mẹ gọi  là gì?" (Nghỉ 1 giây) "Một: Bà ngoại" (Nghỉ 0.5s) "Hai: Bà Nội"
+Tuyệt vời! Đáp án đúng là số một: Bà ngoại"
+
+Câu 32: "Bố là con của ai?" (Nghỉ 1 giây) "Một: Ông bà nội" (Nghỉ 0.5s) "Hai: Ông bà ngoại"
+Tuyệt vời! Đáp án đúng là số một: Ông bà nội"
+
+Câu 33: "Trong câu chuyện “ Sự tích Hồ Gươm” người đánh cá kéo được thứ gì dưới dòng sông lên?" (Nghỉ 1 giây) "Một: Con cá to" (Nghỉ 0.5s) "Hai: Con rùa vàng." (Nghỉ 0.5s) "Ba: Thanh kiếm "
+Tuyệt vời! Đáp án đúng là số ba: Thanh kiếm"
+
+Câu 34: "Trong câu chuyện “cáo thỏ và gà trống” ai đuổi được cáo ra khỏi nhà thỏ?" (Nghỉ 1 giây) "Một: Bầy chó" (Nghỉ 0.5s) "Hai: Gà trống." (Nghỉ 0.5s) "Ba: Bác gấu"
+Tuyệt vời! Đáp án đúng là số hai: Gà trống"
+
+Câu 35: "Trong câu chuyện “ Cây khế ” chim Đại Bàng nói người anh may túi mấy gang để đựng vàng?" (Nghỉ 1 giây) "Một: 6 gang" (Nghỉ 0.5s) "Hai: 3 gang." (Nghỉ 0.5s) "Ba: 9 gang"
+Tuyệt vời! Đáp án đúng là số hai: 3 gang"
+
+Câu 36: "Đâu là sản phẩm của nghề nông?" (Nghỉ 1 giây) "Một: Đồng lúa" (Nghỉ 0.5s) "Hai: Cá tươi." (Nghỉ 0.5s) "Ba: Kẹo Cu đơ"
+Tuyệt vời! Đáp án đúng là số một: Đồng lúa"
+
+Câu 37: "Đâu là trang phục của nghành điện lực?" (Nghỉ 1 giây) "Một: Bộ màu xanh đen" (Nghỉ 0.5s) "Hai: Bộ màu cam." (Nghỉ 0.5s) "Ba: Bộ màu vàng đất"
+Tuyệt vời! Đáp án đúng là số hai: Bộ màu cam"
+
+Câu 38: "Who is he?" (Nghỉ 1 giây) "Một: Farmer" (Nghỉ 0.5s) "Hai: Doctor." (Nghỉ 0.5s) "Ba: Teacher"
+Tuyệt vời! Đáp án đúng là số hai: Doctor"
+
+Câu 39: "Đâu là biển cảnh báo bề mặt trơn dễ té ngã?" (Nghỉ 1 giây) "Một: Ảnh số 1" (Nghỉ 0.5s) "Hai: Ảnh số 2" (Nghỉ 0.5s) "Ba: Ảnh số 3"
+Tuyệt vời! Đáp án đúng là số hai: Ảnh số 2"
+
+Câu 40: "Đồng hồ đang chỉ vào mấy giờ?" (Nghỉ 1 giây) "Một: 12 giờ " (Nghỉ 0.5s) "Hai: 2 giờ" (Nghỉ 0.5s) "Ba: 10 giờ"
+Tuyệt vời! Đáp án đúng là số ba: 10 giờ
+
+Câu 41: "Tên gọi khác của Thành phố Hà Tĩnh gắn liền với tên của một loài hoa?" (Nghỉ 1 giây) "Một: Hoa Phượng đỏ " (Nghỉ 0.5s) "Hai: Thành Sen" 
+Tuyệt vời! Đáp án đúng là số hai: Thành Sen"
+
+Câu 42: "Hãy nghe đoán xem tên bài hát là gì?" (Nghỉ 1 giây) "Một: Cả nhà thương nhau" (Nghỉ 0.5s) "Hai: Ba thương con"
+Tuyệt vời! Đáp án đúng là số một: Cả nhà thương nhau"
+
+Câu 43: "Hãy nghe âm thanh và đoán tên nhạc cụ?" (Nghỉ 1 giây) "Một: Xắc xô " (Nghỉ 0.5s) "Hai: Trống" (Nghỉ 0.5s) "Ba: Đàn ghi ta"
+Tuyệt vời! Đáp án đúng là số ba: Đàn ghi ta "
+
+Câu 44: "Nét tròn em đọc chữ "o" Khuyết đi một nửa sẽ cho chữ gì?" (Nghỉ 1 giây) "Một: Chữ O " (Nghỉ 0.5s) "Hai: Chữ C" (Nghỉ 0.5s) "Ba: Chữ Ô"
+Tuyệt vời! Đáp án đúng là số hai: Chữ C "
+
+Câu 45: "Trong chữ “ Hoa Hồng” còn thiếu chữ cái nào?" (Nghỉ 1 giây) "Một: a " (Nghỉ 0.5s) "Hai: o" (Nghỉ 0.5s) "Ba: n"
+Tuyệt vời! Đáp án đúng là số hai: Chữ o"
+
+Câu 46: "Em bé đang cầm chùm bóng bay bằng tay nào?" (Nghỉ 1 giây) "Một: Tay phải" (Nghỉ 0.5s) "Hai: Tay trái"
+Tuyệt vời! Đáp án đúng là số hai: Tay trái"
+
+Câu 47: "Hôm nay là thứ Bảy thì hôm qua là thứ mấy?" (Nghỉ 1 giây) "Một: Chủ nhật" (Nghỉ 0.5s) "Hai: Thứ sáu" (Nghỉ 0.5s) "Ba: Thứ hai"
+Tuyệt vời! Đáp án đúng là số hai: Thứ sáu "
+
+Câu 48: "Điền vào ô trống hình ảnh thích hợp?" (Nghỉ 1 giây) "Một: Hình 1" (Nghỉ 0.5s) "Hai: Hình 2" (Nghỉ 0.5s) "Ba: Hình ba"
+Tuyệt vời! Đáp án đúng là số hai: Hình 2"
+
+Câu 49: "Khối vuông có bao nhiêu mặt?" (Nghỉ 1 giây) "Một: 4 mặt" (Nghỉ 0.5s) "Hai: 6 mặt" (Nghỉ 0.5s) "Ba: 8 mặt"
+Tuyệt vời! Đáp án đúng là số hai: 6 mặt"
+
+Câu 50: "Có bao nhiêu hình vuông trong bức tranh dưới đây?" (Nghỉ 1 giây) "Một: 8 hình" (Nghỉ 0.5s) "Hai: 7 hình" (Nghỉ 0.5s) "Ba: 6 hình"
+Tuyệt vời! Đáp án đúng là số một: 8 hình vuông"
+
+
+Câu 51: "Làm thế nào để quả trứng nổi lên?" (Nghỉ 1 giây) "Một: Cho giấm vào" (Nghỉ 0.5s) "Hai: Cho dầu ăn vào" (Nghỉ 0.5s) "Ba: Cho muối vào"
+Tuyệt vời! Đáp án đúng là số ba: Cho muối vào"
+
+Câu 52: "Linh vật của SEA Games 31 là gì?" (Nghỉ 1 giây) "Một: Trâu vàng" (Nghỉ 0.5s) "Hai: Sao la" (Nghỉ 0.5s) "Ba: Hổ Rimau"
+Tuyệt vời! Đáp án đúng là số hai: Sao la"
+
+Câu 53: "Chọn hình thích hợp điền vào ô trống?" (Nghỉ 1 giây) "Một: Hình 1" (Nghỉ 0.5s) "Hai: Hình 2" (Nghỉ 0.5s) "Ba: Hình 3"
+Tuyệt vời! Đáp án đúng là số một: Hình 1"
+
+Câu 54: "Điền hình thích hợp vào dấu chẩm hỏi?" (Nghỉ 1 giây) "Một: hình tròn" (Nghỉ 0.5s) "Hai: hình ngôi sao" (Nghỉ 0.5s) "Ba: Hình mặt trời"
+Tuyệt vời! Đáp án đúng là số hai: Hình ngôi sao"

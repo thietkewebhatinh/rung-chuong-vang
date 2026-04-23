@@ -230,7 +230,7 @@ ${SHARED_HEAD}
     <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:24px">
       <!-- English Game -->
       <div class="lang-card" onclick="goToGame('english')" id="card-en">
-        <span class="flag">🇬🇧</span>
+        <img src="https://flagcdn.com/w80/gb.png" class="flag" style="height: 50px; width: auto; margin: 0 auto 12px; display: block; border-radius: 4px;" alt="English">
         <div class="lang-name">Tiếng Anh</div>
         <div class="lang-sub">Pikachu Edition</div>
         <div class="lang-sub" style="margin-top:4px;color:rgba(255,255,255,.45);font-size:.8rem">Màu sắc, con vật, cảm xúc...</div>
@@ -239,11 +239,11 @@ ${SHARED_HEAD}
 
       <!-- Vietnamese Game -->
       <div class="lang-card" onclick="goToGame('vietnamese')" id="card-vi" style="border-color:rgba(255,100,100,.4)">
-        <span class="flag">🇻🇳</span>
+        <img src="https://flagcdn.com/w80/vn.png" class="flag" style="height: 50px; width: auto; margin: 0 auto 12px; display: block; border-radius: 4px;" alt="Vietnamese">
         <div class="lang-name" style="color:#FF7070">Tiếng Việt</div>
         <div class="lang-sub">Khối 5 Tuổi</div>
         <div class="lang-sub" style="margin-top:4px;color:rgba(255,255,255,.45);font-size:.8rem">Toán, Tự nhiên, Khoa học...</div>
-        <div class="lang-count" style="background:rgba(255,100,100,.2);border-color:rgba(255,100,100,.4);color:#FF9090">30 câu hỏi</div>
+        <div class="lang-count" style="background:rgba(255,100,100,.2);border-color:rgba(255,100,100,.4);color:#FF9090">54 câu hỏi</div>
       </div>
     </div>
 
@@ -254,6 +254,7 @@ ${SHARED_HEAD}
 </div>
 
 <div class="float-pika" onclick="pikachuClick()" title="Pikachu!">⚡</div>
+<audio id="audio-home" src="/assets/intro-music.mp3" loop preload="auto"></audio>
 
 <script>
 (function createStars(){
@@ -265,8 +266,33 @@ ${SHARED_HEAD}
     bg.appendChild(s);
   }
 })();
+let homeMusicEnabled = true;
+function playHomeMusic(){
+  if(!homeMusicEnabled) return;
+  const a=document.getElementById('audio-home');
+  if(!a) return;
+  a.volume=0.2;
+  a.play().catch(()=>{});
+}
+function stopHomeMusic(){
+  const a=document.getElementById('audio-home');
+  if(!a) return;
+  a.pause();
+  a.currentTime=0;
+}
+window.addEventListener('pointerdown', function initHomeMusic(){
+  playHomeMusic();
+  window.removeEventListener('pointerdown', initHomeMusic);
+}, { once: true });
+window.addEventListener('keydown', function initHomeMusicByKey(){
+  playHomeMusic();
+  window.removeEventListener('keydown', initHomeMusicByKey);
+}, { once: true });
+setTimeout(()=>playHomeMusic(), 200);
 
 function goToGame(lang){
+  homeMusicEnabled=false;
+  stopHomeMusic();
   const el = document.getElementById(lang==='english'?'card-en':'card-vi');
   el.style.transform='scale(0.95)';
   el.style.opacity='0.8';
@@ -309,32 +335,32 @@ function installPWA(){
 // ====================================================
 app.get('/english', (c) => {
   return c.html(`<!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 ${SHARED_HEAD}
-<title>🔔 Rung Chuông Vàng - Tiếng Anh</title>
+<title>🔔 Rung Chuông Vàng - English</title>
 </head>
 <body>
 <div class="stars-bg" id="stars-bg"></div>
 <div class="lightning" id="lightning"></div>
 
-<div id="click-to-start" style="position:fixed;inset:0;z-index:9999;background:rgba(26,10,46,0.95);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(5px)" onclick="this.style.display='none';playIntroMusic()">
+<div id="click-to-start" style="position:fixed;inset:0;z-index:9999;background:rgba(26,10,46,0.95);display:none;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(5px)">
   <div class="pikachu-bounce" style="font-size:5rem;margin-bottom:20px">⚡</div>
-  <h1 style="color:#FFD700;font-family:'Nunito',sans-serif;font-weight:900;font-size:2rem;text-transform:uppercase;letter-spacing:2px;animation:pulse 1s infinite alternate">Nhấn để vào game!</h1>
+  <h1 style="color:#FFD700;font-family:'Nunito',sans-serif;font-weight:900;font-size:2rem;text-transform:uppercase;letter-spacing:2px;animation:pulse 1s infinite alternate">Tap to start!</h1>
 </div>
 
 <!-- INTRO -->
-<div class="screen active" id="screen-intro">
+<div class="screen" id="screen-intro">
   <div style="text-align:center;z-index:1;max-width:600px;width:100%;padding:0 8px">
     <div><span class="bell-ring" style="font-size:3rem">🔔</span></div>
     <h2 class="fredoka" style="color:#FFD700;font-size:clamp(.9rem,2.2vw,1.5rem);letter-spacing:3px;text-transform:uppercase;margin:4px 0 2px">Trường Mầm non Bắc Hà</h2>
     <h1 class="fredoka title-glow" style="color:#FFD700;font-size:clamp(1.9rem,5.5vw,4rem);line-height:1.1">RUNG CHUÔNG VÀNG</h1>
     <div class="pikachu-bounce" style="font-size:clamp(4rem,12vw,8rem);line-height:1;margin:6px 0">⚡</div>
     <h2 class="fredoka" style="color:#fff;font-size:clamp(1.1rem,3vw,2.2rem);margin-bottom:4px">🎮 PIKACHU EDITION 🎮</h2>
-    <p style="color:rgba(255,255,255,.55);font-size:.9rem;margin-bottom:16px">Trắc nghiệm Tiếng Anh vui nhộn dành cho bé</p>
+    <p style="color:rgba(255,255,255,.55);font-size:.9rem;margin-bottom:16px">Fun English quiz for kids</p>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-      <button class="btn-nav" style="padding:10px 22px;font-size:.95rem" onclick="window.location.href='/'">🏠 Trang chủ</button>
-      <button class="btn-main" style="font-size:clamp(1.1rem,3vw,1.5rem);padding:14px 44px" onclick="showRules()">⚡ BẮT ĐẦU NGAY! ⚡</button>
+      <button class="btn-nav" style="padding:10px 22px;font-size:.95rem" onclick="stopAudio(); stopIntroMusic(); clearTimer(); window.location.href='/'">🏠 Trang chủ</button>
+      <button class="btn-main" style="font-size:clamp(1.1rem,3vw,1.5rem);padding:14px 44px" onclick="stopIntroMusic();introMusicEnabled=false;document.getElementById('screen-intro').classList.remove('active');document.getElementById('screen-grid').classList.add('active');buildGrid();updateProgress();">⚡ START NOW! ⚡</button>
     </div>
   </div>
 </div>
@@ -342,40 +368,40 @@ ${SHARED_HEAD}
 <!-- RULES -->
 <div class="screen" id="screen-rules" style="overflow-y:auto">
   <div style="z-index:1;width:100%;max-width:660px;padding:8px 0">
-    <h1 class="fredoka" style="color:#FFD700;font-size:1.9rem;text-align:center;margin-bottom:14px">📋 Luật Chơi</h1>
-    <div class="rule-card" style="padding:12px 18px;margin-bottom:8px;animation-delay:.1s"><span style="font-size:1.7rem;flex-shrink:0">❓</span><div><p style="color:#FFD700;font-size:1rem;font-weight:800">30 Câu hỏi Tiếng Anh</p><p style="color:rgba(255,255,255,.65);font-size:.85rem">Màu sắc, con vật, đồ vật, cảm xúc...</p></div></div>
-    <div class="rule-card" style="padding:12px 18px;margin-bottom:8px;animation-delay:.2s"><span style="font-size:1.7rem;flex-shrink:0">⏱️</span><div><p style="color:#FFD700;font-size:1rem;font-weight:800">5 giây mỗi câu</p><p style="color:rgba(255,255,255,.65);font-size:.85rem">Đồng hồ đếm ngược ở góc, không che đáp án</p></div></div>
-    <div class="rule-card" style="padding:12px 18px;margin-bottom:8px;animation-delay:.3s"><span style="font-size:1.7rem;flex-shrink:0">🖐️</span><div><p style="color:#FFD700;font-size:1rem;font-weight:800">Chọn 1, 2 hoặc 3</p><p style="color:rgba(255,255,255,.65);font-size:.85rem">Giơ bảng đáp án sau khi hết 5 giây</p></div></div>
-    <div class="rule-card" style="padding:12px 18px;margin-bottom:8px;animation-delay:.4s"><span style="font-size:1.7rem;flex-shrink:0">🔊</span><div><p style="color:#FFD700;font-size:1rem;font-weight:800">Đọc câu hỏi & đáp án tự động</p><p style="color:rgba(255,255,255,.65);font-size:.85rem">TTS tiếng Anh giúp bé nghe và nhận biết</p></div></div>
-    <div class="rule-card" style="padding:12px 18px;margin-bottom:16px;animation-delay:.5s"><span style="font-size:1.7rem;flex-shrink:0">🏆</span><div><p style="color:#FFD700;font-size:1rem;font-weight:800">Chế độ Thi: câu 1→30 tự động</p><p style="color:rgba(255,255,255,.65);font-size:.85rem">Đọc câu, đếm ngược 5s, tính điểm cuối cùng</p></div></div>
+    <h1 class="fredoka" style="color:#FFD700;font-size:1.9rem;text-align:center;margin-bottom:14px">📋 Rules</h1>
+    <div class="rule-card" style="padding:12px 18px;margin-bottom:8px;animation-delay:.1s"><span style="font-size:1.7rem;flex-shrink:0">❓</span><div><p style="color:#FFD700;font-size:1rem;font-weight:800">30 English questions</p><p style="color:rgba(255,255,255,.65);font-size:.85rem">Colors, animals, objects, feelings...</p></div></div>
+    <div class="rule-card" style="padding:12px 18px;margin-bottom:8px;animation-delay:.2s"><span style="font-size:1.7rem;flex-shrink:0">⏱️</span><div><p style="color:#FFD700;font-size:1rem;font-weight:800">5 seconds per question</p><p style="color:rgba(255,255,255,.65);font-size:.85rem">Countdown stays in the corner</p></div></div>
+    <div class="rule-card" style="padding:12px 18px;margin-bottom:8px;animation-delay:.3s"><span style="font-size:1.7rem;flex-shrink:0">🖐️</span><div><p style="color:#FFD700;font-size:1rem;font-weight:800">Choose 1, 2, or 3</p><p style="color:rgba(255,255,255,.65);font-size:.85rem">Pick your answer before time is up</p></div></div>
+    <div class="rule-card" style="padding:12px 18px;margin-bottom:8px;animation-delay:.4s"><span style="font-size:1.7rem;flex-shrink:0">🔊</span><div><p style="color:#FFD700;font-size:1rem;font-weight:800">Auto-read question and answers</p><p style="color:rgba(255,255,255,.65);font-size:.85rem">English TTS only</p></div></div>
+    <div class="rule-card" style="padding:12px 18px;margin-bottom:16px;animation-delay:.5s"><span style="font-size:1.7rem;flex-shrink:0">🏆</span><div><p style="color:#FFD700;font-size:1rem;font-weight:800">Competition mode: 1→30</p><p style="color:rgba(255,255,255,.65);font-size:.85rem">Auto flow, timer, and final score</p></div></div>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-      <button class="btn-nav" style="font-size:.95rem;padding:10px 20px" onclick="showIntro()">← Quay lại</button>
-      <button class="btn-main" style="font-size:1.1rem;padding:11px 32px;letter-spacing:0" onclick="showGrid()">🎯 VÀO GAME!</button>
+      <button class="btn-nav" style="font-size:.95rem;padding:10px 20px" onclick="document.getElementById('screen-rules').classList.remove('active');document.getElementById('screen-intro').classList.add('active');">← Back</button>
+      <button class="btn-main" style="font-size:1.1rem;padding:11px 32px;letter-spacing:0" onclick="stopIntroMusic();introMusicEnabled=false;document.getElementById('screen-rules').classList.remove('active');document.getElementById('screen-grid').classList.add('active');buildGrid();updateProgress();">🎯 START GAME!</button>
     </div>
   </div>
 </div>
 
 <!-- QUESTION GRID -->
-<div class="screen" id="screen-grid">
+<div class="screen active" id="screen-grid">
   <div class="grid-wrap" style="z-index:1">
     <div class="grid-header">
       <h1 class="fredoka" style="color:#FFD700;font-size:clamp(1rem,2.2vw,1.5rem)">🔔 RUNG CHUÔNG VÀNG 🇬🇧</h1>
       <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-        <span class="score-tracker" id="progress-text">0/30 câu</span>
-        <button class="btn-nav" style="padding:6px 14px;font-size:.85rem" onclick="window.location.href='/'">🏠 Home</button>
+        <span class="score-tracker" id="progress-text">0/30</span>
+        <button class="btn-nav" style="padding:6px 14px;font-size:.85rem" onclick="stopAudio(); stopIntroMusic(); clearTimer(); window.location.href='/'">🏠 Home</button>
       </div>
     </div>
     <div style="background:linear-gradient(135deg,rgba(0,255,136,.15),rgba(0,200,81,.05));border:2px solid rgba(0,255,136,.4);border-radius:16px;padding:12px 18px;margin:12px 0 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
       <div>
-        <h2 class="fredoka" style="color:#00ff88;font-size:1.2rem;margin-bottom:2px">🏆 BẮT ĐẦU THI</h2>
-        <p style="color:rgba(255,255,255,.7);font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:700">Tự động lần lượt 30 câu hỏi và chấm điểm.</p>
+        <h2 class="fredoka" style="color:#00ff88;font-size:1.2rem;margin-bottom:2px">🏆 COMPETITION</h2>
+        <p style="color:rgba(255,255,255,.7);font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:700">Run all 30 questions automatically and score.</p>
       </div>
-      <button class="btn-main" style="font-size:.95rem;padding:10px 24px;letter-spacing:0;background:linear-gradient(135deg,#00c851,#007e33);border-color:#00ff88;color:#fff;animation:none" onclick="startCompetition()">▶ VÀO THI NGAY</button>
+      <button class="btn-main" style="font-size:.95rem;padding:10px 24px;letter-spacing:0;background:linear-gradient(135deg,#00c851,#007e33);border-color:#00ff88;color:#fff;animation:none" onclick="startCompetition()">▶ START COMPETITION</button>
     </div>
     <div style="background:linear-gradient(135deg,rgba(255,215,0,.1),rgba(255,165,0,.05));border:2px solid rgba(255,215,0,.3);border-radius:16px;padding:14px;flex:1;display:flex;flex-direction:column;min-height:0;margin-bottom:8px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-        <h2 class="fredoka" style="color:#FFD700;font-size:1.15rem">📚 LUYỆN TẬP</h2>
-        <button class="btn-nav" style="font-size:.8rem;padding:5px 12px" onclick="resetProgress()">🔄 Chơi lại</button>
+        <h2 class="fredoka" style="color:#FFD700;font-size:1.15rem">📚 PRACTICE</h2>
+        <button class="btn-nav" style="font-size:.8rem;padding:5px 12px" onclick="resetProgress()">🔄 Reset</button>
       </div>
       <div class="grid-container" id="question-grid" style="overflow-y:auto;padding-right:4px;align-content:start"></div>
     </div>
@@ -386,12 +412,12 @@ ${SHARED_HEAD}
 <div class="screen" id="screen-question">
   <div class="q-wrap" style="z-index:1">
     <div class="q-top-bar">
-      <div class="q-badge" id="q-num-badge">Câu 1/30</div>
-      <div class="mode-badge" id="mode-badge" style="background:rgba(255,100,0,.25);border:2px solid rgba(255,150,0,.5);color:#FFA500">📚 Luyện tập</div>
-      <div class="score-tracker" id="q-score-live" style="display:none">✅ 0 đúng</div>
-      <div style="flex:1;min-width:4px"></div>
-      <span class="tts-badge" id="tts-status">🔊 Đọc bài...</span>
-      <button class="btn-nav" style="padding:5px 12px;font-size:.82rem" onclick="goBack()">📋 Bảng câu</button>
+      <div class="q-badge" id="q-num-badge">Question 1/30</div>
+      <div class="mode-badge" id="mode-badge" style="background:rgba(255,100,0,.25);border:2px solid rgba(255,150,0,.5);color:#FFA500">📚 Practice</div>
+      <div class="score-tracker" id="q-score-live" style="display:none">✅ 0 correct</div>
+      <div style="flex:1;min-width:4px;display:flex;justify-content:center"><button class="btn-nav" style="padding:4px 10px;font-size:.8rem;border-color:rgba(255,215,0,0.5)" onclick="stopAudio(); stopIntroMusic(); clearTimer(); window.location.href='/'">🏠 Home</button></div>
+      <span class="tts-badge" id="tts-status">🔊 Reading...</span>
+      <button class="btn-nav" style="padding:5px 12px;font-size:.82rem" onclick="goBack()">📋 Question Grid</button>
     </div>
     <div class="timer-row">
       <div class="timer-bar-wrap"><div class="timer-bar" id="timer-bar"></div></div>
@@ -403,12 +429,12 @@ ${SHARED_HEAD}
       <div class="q-text-main" id="q-text-main">Loading...</div>
       <div class="q-hint" id="q-hint"></div>
       <div id="media-btn-wrap" style="text-align:center;margin-top:8px;display:none;gap:8px;justify-content:center;flex-wrap:wrap" class="flex">
-        <button class="btn-media" style="font-size:.9rem;padding:7px 20px" id="play-media-btn" onclick="playSpecialMedia()">🎵 Nghe / Xem!</button>
+        <button class="btn-media" style="font-size:.9rem;padding:7px 20px" id="play-media-btn" onclick="playSpecialMedia()">🎵 Play Media</button>
       </div>
     </div>
     <div class="choices-grid" id="choices-container"></div>
     <div class="q-actions">
-      <button class="btn-nav" style="padding:7px 16px;font-size:.85rem" onclick="speakQuestion()">🔊 Đọc lại</button>
+      <button class="btn-nav" style="padding:7px 16px;font-size:.85rem" onclick="speakQuestion()">🔊 Read Again</button>
       <button class="btn-main" style="font-size:1rem;padding:10px 28px;letter-spacing:0;animation:btnPulse 2s ease-in-out infinite" id="btn-action-next" onclick="handleNextBtn()">➡ NEXT</button>
     </div>
   </div>
@@ -419,43 +445,43 @@ ${SHARED_HEAD}
 </div>
 <div id="answer-overlay" onclick="nextQuestion()">
   <div class="answer-card" onclick="nextQuestion()" style="cursor:pointer">
-    <p class="answer-label">⚡ Đáp án đúng ⚡</p>
+    <p class="answer-label">⚡ Correct Answer ⚡</p>
     <p class="answer-text" id="answer-text-display"></p>
     <span class="confetti-emoji" id="answer-emoji">🎊</span>
-    <p style="color:rgba(255,255,255,.5);font-size:.8rem;margin-bottom:10px">Nhấn bất kỳ để tiếp tục</p>
+    <p style="color:rgba(255,255,255,.5);font-size:.8rem;margin-bottom:10px">Tap anywhere to continue</p>
     <button class="btn-main" style="font-size:1rem;padding:11px 32px;letter-spacing:0" id="btn-next" onclick="event.stopPropagation();nextQuestion()">➡ NEXT</button>
   </div>
 </div>
 <div id="lion-overlay" onclick="closeLionPopup()">
   <div class="lion-popup" onclick="event.stopPropagation()">
     <div style="font-size:4rem;margin-bottom:10px;animation:pulse 1s ease-in-out infinite">🦁</div>
-    <h2 class="fredoka" style="color:#FF8C00;font-size:1.6rem;margin-bottom:6px">TIẾNG SƯ TỬ!</h2>
-    <p style="color:rgba(255,255,255,.75);font-size:.9rem;margin-bottom:16px">Nghe âm thanh — đây là con gì?</p>
-    <button class="btn-media" style="font-size:1rem;padding:10px 28px;margin-bottom:14px" onclick="replayLionSound()">🔊 Nghe lại</button><br>
-    <button class="btn-nav" style="padding:8px 22px;font-size:.9rem;margin-top:4px;display:inline-flex" onclick="closeLionPopup()">✕ Đóng</button>
+    <h2 id="lion-popup-title" class="fredoka" style="color:#FF8C00;font-size:1.6rem;margin-bottom:6px">LION SOUND!</h2>
+    <p id="lion-popup-subtitle" style="color:rgba(255,255,255,.75);font-size:.9rem;margin-bottom:16px">Listen and guess the animal</p>
+    <button id="lion-popup-replay-btn" class="btn-media" style="font-size:1rem;padding:10px 28px;margin-bottom:14px" onclick="replayLionSound()">🔊 Replay</button><br>
+    <button class="btn-nav" style="padding:8px 22px;font-size:.9rem;margin-top:4px;display:inline-flex" onclick="closeLionPopup()">✕ Close</button>
   </div>
 </div>
 <div id="media-overlay">
   <video id="media-video" controls playsinline style="max-width:min(640px,92vw);max-height:65vh;border-radius:16px;border:4px solid #FFD700"></video>
   <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
-    <button class="btn-nav" style="font-size:.95rem;padding:9px 24px" onclick="closeMedia()">✕ Đóng video</button>
+    <button class="btn-nav" style="font-size:.95rem;padding:9px 24px" onclick="closeMedia()">✕ Close Video</button>
     <button class="btn-main" style="font-size:.95rem;padding:9px 24px;letter-spacing:0;animation:none" onclick="revealAnswerFromMedia()">➡ NEXT</button>
   </div>
 </div>
 <div id="result-popup">
   <div class="result-card">
     <div style="font-size:3rem;margin-bottom:10px;animation:pikaBounce .8s ease-in-out infinite alternate">🏆</div>
-    <h1 class="fredoka title-glow" style="color:#FFD700;font-size:clamp(1.5rem,4vw,2.8rem);margin-bottom:12px">KẾT QUẢ!</h1>
+    <h1 class="fredoka title-glow" style="color:#FFD700;font-size:clamp(1.5rem,4vw,2.8rem);margin-bottom:12px">RESULT!</h1>
     <div class="score-ring">
       <div class="score-big" id="popup-score-num">0/30</div>
-      <div class="score-label">CÂU ĐÚNG</div>
+      <div class="score-label">CORRECT</div>
     </div>
-    <p id="popup-msg" style="color:#fff;font-size:1.1rem;margin-bottom:6px">🎉 Chúc mừng các bé! 🎉</p>
+    <p id="popup-msg" style="color:#fff;font-size:1.1rem;margin-bottom:6px">🎉 Great job! 🎉</p>
     <p id="popup-sub" style="color:rgba(255,255,255,.6);font-size:.9rem;margin-bottom:20px"></p>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-      <button class="btn-nav" style="padding:9px 20px;font-size:.95rem" onclick="closeResultPopup();showGrid()">📋 Xem bảng câu</button>
-      <button class="btn-nav" style="padding:9px 20px;font-size:.95rem" onclick="window.location.href='/'">🏠 Trang chủ</button>
-      <button class="btn-main" style="font-size:1rem;padding:10px 28px;letter-spacing:0" onclick="closeResultPopup();resetGame()">🔄 Chơi lại!</button>
+      <button class="btn-nav" style="padding:9px 20px;font-size:.95rem" onclick="closeResultPopup();showGrid()">📋 Question Grid</button>
+      <button class="btn-nav" style="padding:9px 20px;font-size:.95rem" onclick="stopAudio(); stopIntroMusic(); clearTimer(); window.location.href='/'">🏠 Home</button>
+      <button class="btn-main" style="font-size:1rem;padding:10px 28px;letter-spacing:0" onclick="closeResultPopup();resetGame()">🔄 Play Again!</button>
     </div>
   </div>
 </div>
@@ -518,13 +544,13 @@ ${SHARED_HEAD}
 <div class="stars-bg" id="stars-bg"></div>
 <div class="lightning" id="lightning"></div>
 
-<div id="click-to-start" style="position:fixed;inset:0;z-index:9999;background:rgba(26,10,46,0.95);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(5px)" onclick="this.style.display='none';playIntroMusic()">
+<div id="click-to-start" style="position:fixed;inset:0;z-index:9999;background:rgba(26,10,46,0.95);display:none;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(5px)">
   <div style="font-size:5rem;margin-bottom:20px;animation:pikaBounce .8s ease-in-out infinite alternate">🇻🇳</div>
   <h1 style="color:#FFD700;font-family:'Nunito',sans-serif;font-weight:900;font-size:2rem;text-transform:uppercase;letter-spacing:2px;animation:pulse 1s infinite alternate">Nhấn để vào game!</h1>
 </div>
 
 <!-- INTRO -->
-<div class="screen active" id="screen-intro">
+<div class="screen" id="screen-intro">
   <div style="text-align:center;z-index:1;max-width:600px;width:100%;padding:0 8px">
     <div><span class="bell-ring" style="font-size:3rem">🔔</span></div>
     <h2 class="fredoka" style="color:#FFD700;font-size:clamp(.9rem,2.2vw,1.5rem);letter-spacing:3px;text-transform:uppercase;margin:4px 0 2px">Trường Mầm non Bắc Hà</h2>
@@ -533,7 +559,7 @@ ${SHARED_HEAD}
     <h2 class="fredoka" style="color:#fff;font-size:clamp(1.1rem,3vw,2.2rem);margin-bottom:4px">🎮 KHỐI 5 TUỔI 🎮</h2>
     <p style="color:rgba(255,255,255,.55);font-size:.9rem;margin-bottom:16px">Trắc nghiệm Tiếng Việt vui nhộn dành cho bé</p>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-      <button class="btn-nav" style="padding:10px 22px;font-size:.95rem" onclick="window.location.href='/'">🏠 Trang chủ</button>
+      <button class="btn-nav" style="padding:10px 22px;font-size:.95rem" onclick="stopAudio(); stopIntroMusic(); clearTimer(); window.location.href='/'">🏠 Trang chủ</button>
       <button class="btn-main" style="font-size:clamp(1.1rem,3vw,1.5rem);padding:14px 44px" onclick="showRules()">🔔 BẮT ĐẦU NGAY! 🔔</button>
     </div>
   </div>
@@ -556,19 +582,19 @@ ${SHARED_HEAD}
 </div>
 
 <!-- QUESTION GRID -->
-<div class="screen" id="screen-grid">
+<div class="screen active" id="screen-grid">
   <div class="grid-wrap" style="z-index:1">
     <div class="grid-header">
       <h1 class="fredoka" style="color:#FFD700;font-size:clamp(1rem,2.2vw,1.5rem)">🔔 RUNG CHUÔNG VÀNG 🇻🇳</h1>
       <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-        <span class="score-tracker" id="progress-text">0/30 câu</span>
-        <button class="btn-nav" style="padding:6px 14px;font-size:.85rem" onclick="window.location.href='/'">🏠 Home</button>
+        <span class="score-tracker" id="progress-text">0/54 câu</span>
+        <button class="btn-nav" style="padding:6px 14px;font-size:.85rem" onclick="stopAudio(); stopIntroMusic(); clearTimer(); window.location.href='/'">🏠 Home</button>
       </div>
     </div>
     <div style="background:linear-gradient(135deg,rgba(0,255,136,.15),rgba(0,200,81,.05));border:2px solid rgba(0,255,136,.4);border-radius:16px;padding:12px 18px;margin:12px 0 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
       <div>
         <h2 class="fredoka" style="color:#00ff88;font-size:1.2rem;margin-bottom:2px">🏆 BẮT ĐẦU THI</h2>
-        <p style="color:rgba(255,255,255,.7);font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:700">Tự động lần lượt 30 câu hỏi và chấm điểm.</p>
+        <p style="color:rgba(255,255,255,.7);font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:700">Tự động lần lượt 54 câu hỏi và chấm điểm.</p>
       </div>
       <button class="btn-main" style="font-size:.95rem;padding:10px 24px;letter-spacing:0;background:linear-gradient(135deg,#00c851,#007e33);border-color:#00ff88;color:#fff;animation:none" onclick="startCompetition()">▶ VÀO THI NGAY</button>
     </div>
@@ -586,10 +612,10 @@ ${SHARED_HEAD}
 <div class="screen" id="screen-question">
   <div class="q-wrap" style="z-index:1">
     <div class="q-top-bar">
-      <div class="q-badge" id="q-num-badge">Câu 1/30</div>
+      <div class="q-badge" id="q-num-badge">Câu 1/54</div>
       <div class="mode-badge" id="mode-badge" style="background:rgba(255,100,0,.25);border:2px solid rgba(255,150,0,.5);color:#FFA500">📚 Luyện tập</div>
       <div class="score-tracker" id="q-score-live" style="display:none">✅ 0 đúng</div>
-      <div style="flex:1;min-width:4px"></div>
+      <div style="flex:1;min-width:4px;display:flex;justify-content:center"><button class="btn-nav" style="padding:4px 10px;font-size:.8rem;border-color:rgba(255,215,0,0.5)" onclick="stopAudio(); stopIntroMusic(); clearTimer(); window.location.href='/'">🏠 Trang chủ</button></div>
       <span class="tts-badge" id="tts-status">🔊 Đọc bài...</span>
       <button class="btn-nav" style="padding:5px 12px;font-size:.82rem" onclick="goBack()">📋 Bảng câu</button>
     </div>
@@ -602,6 +628,9 @@ ${SHARED_HEAD}
       <div class="q-visual-wrap" id="q-visual-wrap"></div>
       <div class="q-text-main" id="q-text-main">Loading...</div>
       <div class="q-hint" id="q-hint"></div>
+      <div id="media-btn-wrap" style="text-align:center;margin-top:8px;display:none;gap:8px;justify-content:center;flex-wrap:wrap" class="flex">
+        <button class="btn-media" style="font-size:.9rem;padding:7px 20px" id="play-media-btn" onclick="playSpecialMedia()">🎵 Nghe / Xem!</button>
+      </div>
     </div>
     <div class="choices-grid" id="choices-container"></div>
     <div class="q-actions">
@@ -623,19 +652,35 @@ ${SHARED_HEAD}
     <button class="btn-main" style="font-size:1rem;padding:11px 32px;letter-spacing:0" id="btn-next" onclick="event.stopPropagation();nextQuestion()">➡ NEXT</button>
   </div>
 </div>
+<div id="lion-overlay" onclick="closeLionPopup()">
+  <div class="lion-popup" onclick="event.stopPropagation()">
+    <div style="font-size:4rem;margin-bottom:10px;animation:pulse 1s ease-in-out infinite">🦁</div>
+    <h2 id="lion-popup-title" class="fredoka" style="color:#FF8C00;font-size:1.6rem;margin-bottom:6px">TIẾNG SƯ TỬ!</h2>
+    <p id="lion-popup-subtitle" style="color:rgba(255,255,255,.75);font-size:.9rem;margin-bottom:16px">Nghe âm thanh — đây là con gì?</p>
+    <button id="lion-popup-replay-btn" class="btn-media" style="font-size:1rem;padding:10px 28px;margin-bottom:14px" onclick="replayLionSound()">🔊 Nghe lại</button><br>
+    <button class="btn-nav" style="padding:8px 22px;font-size:.9rem;margin-top:4px;display:inline-flex" onclick="closeLionPopup()">✕ Đóng</button>
+  </div>
+</div>
+<div id="media-overlay">
+  <video id="media-video" controls playsinline style="max-width:min(640px,92vw);max-height:65vh;border-radius:16px;border:4px solid #FFD700"></video>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+    <button class="btn-nav" style="font-size:.95rem;padding:9px 24px" onclick="closeMedia()">✕ Đóng video</button>
+    <button class="btn-main" style="font-size:.95rem;padding:9px 24px;letter-spacing:0;animation:none" onclick="revealAnswerFromMedia()">➡ NEXT</button>
+  </div>
+</div>
 <div id="result-popup">
   <div class="result-card">
     <div style="font-size:3rem;margin-bottom:10px;animation:pikaBounce .8s ease-in-out infinite alternate">🏆</div>
     <h1 class="fredoka title-glow" style="color:#FFD700;font-size:clamp(1.5rem,4vw,2.8rem);margin-bottom:12px">KẾT QUẢ!</h1>
     <div class="score-ring">
-      <div class="score-big" id="popup-score-num">0/30</div>
+      <div class="score-big" id="popup-score-num">0/54</div>
       <div class="score-label">CÂU ĐÚNG</div>
     </div>
     <p id="popup-msg" style="color:#fff;font-size:1.1rem;margin-bottom:6px">🎉 Chúc mừng các bé! 🎉</p>
     <p id="popup-sub" style="color:rgba(255,255,255,.6);font-size:.9rem;margin-bottom:20px"></p>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
       <button class="btn-nav" style="padding:9px 20px;font-size:.95rem" onclick="closeResultPopup();showGrid()">📋 Xem bảng câu</button>
-      <button class="btn-nav" style="padding:9px 20px;font-size:.95rem" onclick="window.location.href='/'">🏠 Trang chủ</button>
+      <button class="btn-nav" style="padding:9px 20px;font-size:.95rem" onclick="stopAudio(); stopIntroMusic(); clearTimer(); window.location.href='/'">🏠 Trang chủ</button>
       <button class="btn-main" style="font-size:1rem;padding:10px 28px;letter-spacing:0" onclick="closeResultPopup();resetGame()">🔄 Chơi lại!</button>
     </div>
   </div>
@@ -646,41 +691,63 @@ ${SHARED_HEAD}
 
 <script>
 // ====================================================
-// VIETNAMESE QUESTIONS — 30 câu hỏi Khối 5 Tuổi
+// VIETNAMESE QUESTIONS — 54 câu hỏi Khối 5 Tuổi
 // ====================================================
 const Q = [
-  // Câu 1–7 từ file PPT (đã có nội dung)
-  {emoji:"🍎",question:"Có bao nhiêu quả táo trong hình sau đây?",choices:[{icon:"5️⃣",label:"5 quả"},{icon:"8️⃣",label:"8 quả"},{icon:"6️⃣",label:"6 quả"}],correct:2,speak:"Có bao nhiêu quả táo trong hình sau đây? Một: 5 quả. Hai: 8 quả. Ba: 6 quả."},
-  {emoji:"🍓",question:"10 quả dâu bớt đi 3 quả còn mấy quả dâu?",choices:[{icon:"7️⃣",label:"7 quả"},{icon:"5️⃣",label:"5 quả"},{icon:"8️⃣",label:"8 quả"}],correct:0,speak:"10 quả dâu bớt đi 3 quả còn mấy quả dâu? Một: 7 quả. Hai: 5 quả. Ba: 8 quả."},
-  {emoji:"🔷",question:"Hình nào sau đây có 4 cạnh dài bằng nhau?",choices:[{icon:"⬛",label:"Hình vuông"},{icon:"⭕",label:"Hình tròn"},{icon:"🔺",label:"Hình tam giác"}],correct:0,speak:"Hình nào sau đây có 4 cạnh dài bằng nhau? Một: Hình vuông. Hai: Hình tròn. Ba: Hình tam giác."},
-  {emoji:"🎯",question:"Khối nào sau đây lăn được?",choices:[{icon:"🟥",label:"Khối vuông"},{icon:"📦",label:"Khối chữ nhật"},{icon:"🔵",label:"Khối cầu"}],correct:2,speak:"Khối nào sau đây lăn được? Một: Khối vuông. Hai: Khối chữ nhật. Ba: Khối cầu."},
-  {emoji:"🐟",question:"Con cá bơi dưới nước thở bằng gì?",choices:[{icon:"🫧",label:"Bằng mang"},{icon:"👁️",label:"Bằng mắt"},{icon:"👄",label:"Bằng miệng"}],correct:0,speak:"Con cá bơi dưới nước thở bằng gì? Một: Bằng mang. Hai: Bằng mắt. Ba: Bằng miệng."},
-  {emoji:"🐔",question:"Các con vật sau đây, con nào có hai chân đẻ trứng?",choices:[{icon:"🐓",label:"Gà trống"},{icon:"🐔",label:"Gà mái"},{icon:"🐱",label:"Con mèo"}],correct:1,speak:"Con nào có hai chân đẻ trứng? Một: Gà trống. Hai: Gà mái. Ba: Con mèo."},
-  {emoji:"🥩",question:"Đâu là thực phẩm thuộc nhóm chất đạm?",choices:[{icon:"🌽",label:"Ngô, khoai"},{icon:"🐟",label:"Cá, Thịt"},{icon:"🥦",label:"Rau, củ, quả"}],correct:1,speak:"Đâu là thực phẩm thuộc nhóm chất đạm? Một: Ngô khoai. Hai: Cá thịt. Ba: Rau củ quả."},
-  // Câu 8–30 bổ sung theo chương trình khối 5 tuổi
-  {emoji:"🌳",question:"Cây cần gì để sống và phát triển?",choices:[{icon:"💧",label:"Nước và ánh sáng"},{icon:"🪨",label:"Đất và đá"},{icon:"❄️",label:"Tuyết và băng"}],correct:0,speak:"Cây cần gì để sống và phát triển? Một: Nước và ánh sáng. Hai: Đất và đá. Ba: Tuyết và băng."},
-  {emoji:"🌦️",question:"Mây đen xuất hiện trên bầu trời báo hiệu điều gì?",choices:[{icon:"☀️",label:"Trời nắng"},{icon:"🌧️",label:"Sắp có mưa"},{icon:"🌬️",label:"Gió mạnh"}],correct:1,speak:"Mây đen xuất hiện trên bầu trời báo hiệu điều gì? Một: Trời nắng. Hai: Sắp có mưa. Ba: Gió mạnh."},
-  {emoji:"➕",question:"3 + 4 bằng bao nhiêu?",choices:[{icon:"6️⃣",label:"6"},{icon:"7️⃣",label:"7"},{icon:"8️⃣",label:"8"}],correct:1,speak:"3 cộng 4 bằng bao nhiêu? Một: 6. Hai: 7. Ba: 8."},
-  {emoji:"🐛",question:"Con bướm lớn lên từ con gì?",choices:[{icon:"🐝",label:"Con ong"},{icon:"🐛",label:"Con sâu"},{icon:"🐜",label:"Con kiến"}],correct:1,speak:"Con bướm lớn lên từ con gì? Một: Con ong. Hai: Con sâu. Ba: Con kiến."},
-  {emoji:"🔟",question:"Số liền sau số 9 là số mấy?",choices:[{icon:"8️⃣",label:"8"},{icon:"🔟",label:"10"},{icon:"1️⃣",label:"11"}],correct:1,speak:"Số liền sau số 9 là số mấy? Một: 8. Hai: 10. Ba: 11."},
-  {emoji:"🦷",question:"Chúng ta đánh răng mấy lần một ngày?",choices:[{icon:"1️⃣",label:"1 lần"},{icon:"2️⃣",label:"2 lần"},{icon:"3️⃣",label:"3 lần"}],correct:1,speak:"Chúng ta đánh răng mấy lần một ngày? Một: 1 lần. Hai: 2 lần. Ba: 3 lần."},
-  {emoji:"🚦",question:"Đèn giao thông màu đỏ có nghĩa là gì?",choices:[{icon:"🚶",label:"Được đi"},{icon:"🛑",label:"Dừng lại"},{icon:"⚡",label:"Chạy nhanh"}],correct:1,speak:"Đèn giao thông màu đỏ có nghĩa là gì? Một: Được đi. Hai: Dừng lại. Ba: Chạy nhanh."},
-  {emoji:"🌙",question:"Ban ngày chúng ta nhìn thấy gì trên bầu trời?",choices:[{icon:"🌙",label:"Mặt trăng"},{icon:"⭐",label:"Ngôi sao"},{icon:"☀️",label:"Mặt trời"}],correct:2,speak:"Ban ngày chúng ta nhìn thấy gì trên bầu trời? Một: Mặt trăng. Hai: Ngôi sao. Ba: Mặt trời."},
-  {emoji:"🔢",question:"5 + 5 bằng bao nhiêu?",choices:[{icon:"9️⃣",label:"9"},{icon:"🔟",label:"10"},{icon:"1️⃣",label:"11"}],correct:1,speak:"5 cộng 5 bằng bao nhiêu? Một: 9. Hai: 10. Ba: 11."},
-  {emoji:"🐸",question:"Con ếch sống ở đâu?",choices:[{icon:"🌲",label:"Trên cây"},{icon:"🌊",label:"Dưới nước và trên cạn"},{icon:"🏔️",label:"Trên núi cao"}],correct:1,speak:"Con ếch sống ở đâu? Một: Trên cây. Hai: Dưới nước và trên cạn. Ba: Trên núi cao."},
-  {emoji:"❤️",question:"Bộ phận nào trong cơ thể giúp bơm máu đi khắp người?",choices:[{icon:"🧠",label:"Não"},{icon:"🫁",label:"Phổi"},{icon:"❤️",label:"Tim"}],correct:2,speak:"Bộ phận nào trong cơ thể giúp bơm máu? Một: Não. Hai: Phổi. Ba: Tim."},
-  {emoji:"🍊",question:"Quả cam có màu gì?",choices:[{icon:"🔵",label:"Xanh dương"},{icon:"🟠",label:"Cam"},{icon:"🟣",label:"Tím"}],correct:1,speak:"Quả cam có màu gì? Một: Xanh dương. Hai: Cam. Ba: Tím."},
-  {emoji:"🐄",question:"Con bò kêu như thế nào?",choices:[{icon:"🐶",label:"Gâu gâu"},{icon:"🐱",label:"Meo meo"},{icon:"🐄",label:"Moo moo"}],correct:2,speak:"Con bò kêu như thế nào? Một: Gâu gâu. Hai: Meo meo. Ba: Moo moo."},
-  {emoji:"🌺",question:"Hoa hướng dương thường quay về phía nào?",choices:[{icon:"🌑",label:"Bóng tối"},{icon:"☀️",label:"Mặt trời"},{icon:"💧",label:"Nước"}],correct:1,speak:"Hoa hướng dương thường quay về phía nào? Một: Bóng tối. Hai: Mặt trời. Ba: Nước."},
-  {emoji:"✂️",question:"8 bớt đi 3 còn mấy?",choices:[{icon:"4️⃣",label:"4"},{icon:"5️⃣",label:"5"},{icon:"6️⃣",label:"6"}],correct:1,speak:"8 bớt đi 3 còn mấy? Một: 4. Hai: 5. Ba: 6."},
-  {emoji:"🚿",question:"Chúng ta rửa tay khi nào?",choices:[{icon:"🎮",label:"Trước khi chơi game"},{icon:"🍽️",label:"Trước và sau khi ăn"},{icon:"📺",label:"Khi xem tivi"}],correct:1,speak:"Chúng ta rửa tay khi nào? Một: Trước khi chơi game. Hai: Trước và sau khi ăn. Ba: Khi xem tivi."},
-  {emoji:"🔴",question:"Hình nào có 3 cạnh và 3 góc?",choices:[{icon:"🟥",label:"Hình chữ nhật"},{icon:"🔺",label:"Hình tam giác"},{icon:"⭕",label:"Hình tròn"}],correct:1,speak:"Hình nào có 3 cạnh và 3 góc? Một: Hình chữ nhật. Hai: Hình tam giác. Ba: Hình tròn."},
-  {emoji:"🌿",question:"Bộ phận nào của cây hút nước từ đất?",choices:[{icon:"🍃",label:"Lá cây"},{icon:"🌸",label:"Hoa"},{icon:"🌱",label:"Rễ cây"}],correct:2,speak:"Bộ phận nào của cây hút nước từ đất? Một: Lá cây. Hai: Hoa. Ba: Rễ cây."},
-  {emoji:"🦁",question:"Con sư tử sống ở đâu?",choices:[{icon:"❄️",label:"Vùng băng giá"},{icon:"🌿",label:"Đồng cỏ châu Phi"},{icon:"🌊",label:"Dưới biển"}],correct:1,speak:"Con sư tử sống ở đâu? Một: Vùng băng giá. Hai: Đồng cỏ châu Phi. Ba: Dưới biển."},
-  {emoji:"🏠",question:"Ngôi nhà cần vật liệu gì để xây?",choices:[{icon:"🪵",label:"Gỗ và gạch"},{icon:"❄️",label:"Tuyết và băng"},{icon:"🍃",label:"Lá cây"}],correct:0,speak:"Ngôi nhà cần vật liệu gì để xây? Một: Gỗ và gạch. Hai: Tuyết và băng. Ba: Lá cây."},
-  {emoji:"🎈",question:"Bóng bay bay được vì chứa gì bên trong?",choices:[{icon:"💧",label:"Nước"},{icon:"🎈",label:"Khí nhẹ hơn không khí"},{icon:"🔥",label:"Lửa"}],correct:1,speak:"Bóng bay bay được vì chứa gì? Một: Nước. Hai: Khí nhẹ hơn không khí. Ba: Lửa."},
-  {emoji:"🌏",question:"Trường Mầm non Bắc Hà ở tỉnh nào?",choices:[{icon:"🏙️",label:"Hà Nội"},{icon:"🌄",label:"Lào Cai"},{icon:"🌊",label:"Đà Nẵng"}],correct:1,speak:"Trường Mầm non Bắc Hà ở tỉnh nào? Một: Hà Nội. Hai: Lào Cai. Ba: Đà Nẵng."},
-  {emoji:"🎂",question:"Bé học lớp Mầm non bao nhiêu tuổi?",choices:[{icon:"3️⃣",label:"3 tuổi"},{icon:"5️⃣",label:"5 tuổi"},{icon:"7️⃣",label:"7 tuổi"}],correct:1,speak:"Bé học lớp Mầm non bao nhiêu tuổi? Một: 3 tuổi. Hai: 5 tuổi. Ba: 7 tuổi."}
+  {"id": "1", "img": "vi/cau1.png", "question": "Có bao nhiêu quả táo trong hình sau đây?", "choices": [{"icon": "1️⃣", "label": "5 quả"}, {"icon": "2️⃣", "label": "8 quả."}, {"icon": "3️⃣", "label": "6 quả"}], "correct": 1, "speak": "Có bao nhiêu quả táo trong hình sau đây?  Một: 5 quả  Hai: 8 quả.  Ba: 6 quả"},
+  {"id": "2", "img": "vi/cau2.png", "question": "10 quả dâu bớt đi 3 quả còn mấy quả dâu?", "choices": [{"icon": "1️⃣", "label": "7 quả"}, {"icon": "2️⃣", "label": "5 quả."}, {"icon": "3️⃣", "label": "8 quả"}], "correct": 0, "speak": "10 quả dâu bớt đi 3 quả còn mấy quả dâu?  Một: 7 quả  Hai: 5 quả.  Ba: 8 quả"},
+  {"id": "3", "img": "vi/cau3.png", "question": "Hình nào sau đây có bốn cạnh dài bằng nhau?", "choices": [{"icon": "1️⃣", "label": "Hình vuông"}, {"icon": "2️⃣", "label": "Hình tròn."}, {"icon": "3️⃣", "label": "Hình tam giác"}], "correct": 0, "speak": "Hình nào sau đây có bốn cạnh dài bằng nhau?  Một: Hình vuông  Hai: Hình tròn.  Ba: Hình tam giác"},
+  {"id": "4", "img": "vi/cau4.png", "question": "Khối nào sau đây lăn được?", "choices": [{"icon": "1️⃣", "label": "Khối vuông"}, {"icon": "2️⃣", "label": "Khối chữ nhật."}, {"icon": "3️⃣", "label": "Khối cầu"}], "correct": 2, "speak": "Khối nào sau đây lăn được?  Một: Khối vuông  Hai: Khối chữ nhật.  Ba: Khối cầu"},
+  {"id": "5", "img": "vi/cau5.png", "question": "Con cá bơi dưới nước thở bằng gì?", "choices": [{"icon": "1️⃣", "label": "Bằng mang"}, {"icon": "2️⃣", "label": "Bằng mắt."}, {"icon": "3️⃣", "label": "Bằng miệng"}], "correct": 0, "speak": "Con cá bơi dưới nước thở bằng gì?  Một: Bằng mang  Hai: Bằng mắt.  Ba: Bằng miệng"},
+  {"id": "6", "img": "vi/cau6.png", "question": "Các con vật sau  đây, con nào có hai chân đẻ trứng?", "choices": [{"icon": "1️⃣", "label": "Gà trống"}, {"icon": "2️⃣", "label": "Gà mái."}, {"icon": "3️⃣", "label": "Con mèo"}], "correct": 1, "speak": "Các con vật sau  đây, con nào có hai chân đẻ trứng?  Một: Gà trống  Hai: Gà mái.  Ba: Con mèo"},
+  {"id": "7", "img": "vi/cau7.png", "question": "Đâu là thực phẩm thuộc nhóm chất đạm?", "choices": [{"icon": "1️⃣", "label": "Ngô, khoai"}, {"icon": "2️⃣", "label": "Cá, Thịt."}, {"icon": "3️⃣", "label": "Rau, củ, quả"}], "correct": 1, "speak": "Đâu là thực phẩm thuộc nhóm chất đạm?  Một: Ngô, khoai  Hai: Cá, Thịt.  Ba: Rau, củ, quả"},
+  {"id": "8", "img": "vi/cau8.png", "question": "Những loại thực phẩm nào sau đây cung cấp nhiều chất béo?", "choices": [{"icon": "1️⃣", "label": "Ngô, khoai, gạo"}, {"icon": "2️⃣", "label": "Bơ, sữa, dầu ăn."}, {"icon": "3️⃣", "label": "Thịt, cá, tôm, trứng"}], "correct": 1, "speak": "Những loại thực phẩm nào sau đây cung cấp nhiều chất béo?  Một: Ngô, khoai, gạo  Hai: Bơ, sữa, dầu ăn.  Ba: Thịt, cá, tôm, trứng"},
+  {"id": "9", "img": "vi/cau9.png", "question": "Pha trộn màu đỏ với màu vàng sẽ được màu gì?", "choices": [{"icon": "1️⃣", "label": "Màu cam"}, {"icon": "2️⃣", "label": "Màu hồng ."}, {"icon": "3️⃣", "label": "Màu tím"}], "correct": 0, "speak": "Pha trộn màu đỏ với màu vàng sẽ được màu gì?  Một: Màu cam   Hai: Màu hồng .  Ba: Màu tím"},
+  {"id": "10", "img": "vi/cau10.png", "question": "Vật nào sau đây sẽ nổi trong nước?", "choices": [{"icon": "1️⃣", "label": "Cành cây khô"}, {"icon": "2️⃣", "label": "Khối kim loại."}, {"icon": "3️⃣", "label": "Sỏi đá"}], "correct": 0, "speak": "Vật nào sau đây sẽ nổi trong nước?  Một: Cành cây khô   Hai: Khối kim loại.  Ba: Sỏi đá"},
+  {"id": "11", "img": "vi/cau11.png", "question": "Cầu vồng có mấy màu?", "choices": [{"icon": "1️⃣", "label": "Chín màu"}, {"icon": "2️⃣", "label": "Bảy màu."}, {"icon": "3️⃣", "label": "Năm màu"}], "correct": 1, "speak": "Cầu vồng có mấy màu?  Một: Chín màu   Hai: Bảy màu.  Ba: Năm màu"},
+  {"id": "12", "img": "vi/cau12.png", "question": "Hoa nào nở vào mùa hè?", "choices": [{"icon": "1️⃣", "label": "Hoa Phượng đỏ"}, {"icon": "2️⃣", "label": "Hoa Mai."}, {"icon": "3️⃣", "label": "Hoa hồng"}], "correct": 0, "speak": "Hoa nào nở vào mùa hè?  Một: Hoa Phượng đỏ  Hai: Hoa Mai.  Ba: Hoa hồng"},
+  {"id": "13", "img": "vi/cau13.png", "question": "Đâu là nguồn ánh sáng tự nhiên?", "choices": [{"icon": "1️⃣", "label": "Đèn điện"}, {"icon": "2️⃣", "label": "Mặt trời."}, {"icon": "3️⃣", "label": "Đèn dầu"}], "correct": 1, "speak": "Đâu là nguồn ánh sáng tự nhiên?  Một: Đèn điện  Hai: Mặt trời.  Ba: Đèn dầu"},
+  {"id": "14", "img": "vi/cau14.png", "question": "Trường mầm non Bắc Hà nằm  ở phường nào?", "choices": [{"icon": "1️⃣", "label": "Phường Bắc Hà"}, {"icon": "2️⃣", "label": "Phường Nguyễn Du."}, {"icon": "3️⃣", "label": "Phường Nam Hà"}], "correct": 0, "speak": "Trường mầm non Bắc Hà nằm  ở phường nào?  Một: Phường Bắc Hà  Hai: Phường Nguyễn Du.  Ba: Phường Nam Hà"},
+  {"id": "15", "img": "vi/cau15.png", "question": "Đâu là biểu tượng của trường mầm non Bắc Hà?", "choices": [{"icon": "1️⃣", "label": "Ảnh số một"}, {"icon": "2️⃣", "label": "Ảnh số hai."}, {"icon": "3️⃣", "label": "Ảnh số ba"}], "correct": 1, "speak": "Đâu là biểu tượng của trường mầm non Bắc Hà?  Một: Ảnh số một  Hai: Ảnh số hai.  Ba: Ảnh số ba"},
+  {"id": "16", "img": "vi/cau16.png", "question": "Khi thấy đèn vàng người tham gia giao thông phải làm gì?", "choices": [{"icon": "1️⃣", "label": "Dừng lại"}, {"icon": "2️⃣", "label": "Chạy nhanh."}, {"icon": "3️⃣", "label": "Giảm tốc độ"}], "correct": 2, "speak": "Khi thấy đèn vàng người tham gia giao thông phải làm gì?  Một: Dừng lại  Hai: Chạy nhanh.  Ba: Giảm tốc độ"},
+  {"id": "17", "img": "vi/cau17.png", "question": "Muốn đi qua đường cháu sẽ làm gì?", "choices": [{"icon": "1️⃣", "label": "Chạy nhanh qua đường"}, {"icon": "2️⃣", "label": "Nhẹ nhàng đi qua."}, {"icon": "3️⃣", "label": "Nhờ người lớn dắt qua"}], "correct": 2, "speak": "Muốn đi qua đường cháu sẽ làm gì?  Một: Chạy nhanh qua đường  Hai: Nhẹ nhàng đi qua.  Ba: Nhờ người lớn dắt qua"},
+  {"id": "18", "img": "vi/cau18.png", "question": "Khi bị lạc con phải làm gì?", "choices": [{"icon": "1️⃣", "label": "Đi tìm bố mẹ hoặc nhờ người lạ đưa về nhà"}, {"icon": "2️⃣", "label": "Tìm công an nhờ gọi điện cho bố mẹ."}, {"icon": "3️⃣", "label": "Khóc lóc"}], "correct": [1,2], "speak": "Khi bị lạc con phải làm gì?  Một: Đi tìm bố mẹ hoặc nhờ người lạ đưa về nhà  Hai: Tìm công an nhờ gọi điện cho bố mẹ.  Ba: Khóc lóc"},
+  {"id": "19", "img": "vi/cau19.png", "question": "Quả nào sau đây có múi?", "choices": [{"icon": "1️⃣", "label": "Quả Cam"}, {"icon": "2️⃣", "label": "Quả chuối."}, {"icon": "3️⃣", "label": "Quả nhãn"}], "correct": 0, "speak": "Quả nào sau đây có múi?  Một: Quả Cam  Hai: Quả chuối.  Ba: Quả nhãn"},
+  {"id": "20", "img": "vi/cau20.png", "question": "Quả nào sau đây có một hạt?", "choices": [{"icon": "1️⃣", "label": "Quả xoài"}, {"icon": "2️⃣", "label": "Quả na."}, {"icon": "3️⃣", "label": "Quả mít"}], "correct": 0, "speak": "Quả nào sau đây có một hạt?  Một: Quả xoài  Hai: Quả na.  Ba: Quả mít"},
+  {"id": "21", "img": "vi/cau21.png", "question": "Màu đỏ trong tiếng anh đọc là gì?", "choices": [{"icon": "1️⃣", "label": "Red"}, {"icon": "2️⃣", "label": "Yellow."}, {"icon": "3️⃣", "label": "Blue"}], "correct": 0, "speak": "Màu đỏ trong tiếng anh đọc là gì?  Một: Red  Hai: Yellow.  Ba: Blue"},
+  {"id": "22", "img": "vi/cau22.png", "question": "Đâu là số điện thoại báo cháy?", "choices": [{"icon": "1️⃣", "label": "113"}, {"icon": "2️⃣", "label": "114"}, {"icon": "3️⃣", "label": "115"}], "correct": 1, "speak": "Đâu là số điện thoại báo cháy?  Một: 113  Hai: 114  Ba: 115"},
+  {"id": "23", "img": "vi/cau23.png", "question": "Điền số vào ô trống để hợp với quy luật đếm?", "choices": [{"icon": "1️⃣", "label": "Số 5"}, {"icon": "2️⃣", "label": "Số 3"}, {"icon": "3️⃣", "label": "Số 9"}], "correct": 0, "speak": "Điền số vào ô trống để hợp với quy luật đếm?  Một: Số 5  Hai: Số 3  Ba: Số 9"},
+  {"id": "24", "img": "vi/cau24.png", "question": "Đồ dùng nào sau đây được làm bằng kim loại?", "choices": [{"icon": "1️⃣", "label": "Bát đĩa"}, {"icon": "2️⃣", "label": "Thìa."}, {"icon": "3️⃣", "label": "Cốc uống nước"}], "correct": 1, "speak": "Đồ dùng nào sau đây được làm bằng kim loại?  Một: Bát đĩa  Hai: Thìa.  Ba: Cốc uống nước"},
+  {"id": "25", "img": "vi/cau25.png", "question": "Đâu là loại rác khó phân hủy?", "choices": [{"icon": "1️⃣", "label": "Vỏ chuối"}, {"icon": "2️⃣", "label": "Túi ni lông."}, {"icon": "3️⃣", "label": "Giấy"}], "correct": 1, "speak": "Đâu là loại rác khó phân hủy?  Một: Vỏ chuối  Hai: Túi ni lông.  Ba: Giấy "},
+  {"id": "26", "img": "vi/cau26.png", "question": "Đâu là hình ảnh quốc kì Việt Nam?", "choices": [{"icon": "1️⃣", "label": "Nền đỏ, sao vàng 5 cánh"}, {"icon": "2️⃣", "label": "Nền trắng có hình tròn xanh đỏ."}, {"icon": "3️⃣", "label": "Nền sọc trắng, đỏ, góc trái có nhiều ngôi sao"}], "correct": 0, "speak": "Đâu là hình ảnh quốc kì Việt Nam?  Một: Nền đỏ, sao vàng 5 cánh  Hai: Nền trắng có hình tròn xanh đỏ.  Ba: Nền sọc trắng, đỏ, góc trái có nhiều ngôi sao "},
+  {"id": "27", "img": "vi/cau27.png", "question": "Lăng Bác Hồ nằm ở địa danh nào sau đây?", "choices": [{"icon": "1️⃣", "label": "TP Đà Nẵng"}, {"icon": "2️⃣", "label": "TP Hồ Chí Minh."}, {"icon": "3️⃣", "label": "Thủ đô Hà Nội"}], "correct": 2, "speak": "Lăng Bác Hồ nằm ở địa danh nào sau đây?  Một: TP Đà Nẵng  Hai: TP Hồ Chí Minh.  Ba: Thủ đô Hà Nội "},
+  {"id": "28", "img": "vi/cau28.png", "question": "Ngày sinh nhật Bác Hồ là ngày nào sau đây?", "choices": [{"icon": "1️⃣", "label": "Ngày 20 tháng 10"}, {"icon": "2️⃣", "label": "ngày 19 tháng 5."}], "correct": 1, "speak": "Ngày sinh nhật Bác Hồ là ngày nào sau đây?  Một: Ngày 20 tháng 10  Hai: ngày 19 tháng 5."},
+  {"id": "29", "img": "vi/cau29.png", "question": "Ngày mồng 1 tháng 6 là ngày gì?", "choices": [{"icon": "1️⃣", "label": "Ngày Quốc tế lao động"}, {"icon": "2️⃣", "label": "Ngày Quốc tế thiếu nhi."}], "correct": 1, "speak": "Ngày mồng 1 tháng 6 là ngày gì?  Một: Ngày Quốc tế lao động  Hai: Ngày Quốc tế thiếu nhi."},
+  {"id": "30", "img": "vi/cau30.png", "question": "Từ “trời nắng” trong tiếng anh đọc như thế nào?", "choices": [{"icon": "1️⃣", "label": "Windy"}, {"icon": "2️⃣", "label": "Sunny."}, {"icon": "3️⃣", "label": "Cloudy"}], "correct": 1, "speak": "Từ “trời nắng” trong tiếng anh đọc như thế nào?  Một: Windy  Hai: Sunny.  Ba: Cloudy "},
+  {"id": "31", "img": "vi/cau31.png", "question": "Người sinh ra mẹ gọi  là gì?", "choices": [{"icon": "1️⃣", "label": "Bà ngoại"}, {"icon": "2️⃣", "label": "Bà Nội"}], "correct": 0, "speak": "Người sinh ra mẹ gọi  là gì?  Một: Bà ngoại  Hai: Bà Nội"},
+  {"id": "32", "img": "vi/cau32.png", "question": "Bố là con của ai?", "choices": [{"icon": "1️⃣", "label": "Ông bà nội"}, {"icon": "2️⃣", "label": "Ông bà ngoại"}], "correct": 0, "speak": "Bố là con của ai?  Một: Ông bà nội  Hai: Ông bà ngoại"},
+  {"id": "33", "img": "vi/cau33.png", "question": "Trong câu chuyện “ Sự tích Hồ Gươm” người đánh cá kéo được thứ gì dưới dòng sông lên?", "choices": [{"icon": "1️⃣", "label": "Con cá to"}, {"icon": "2️⃣", "label": "Con rùa vàng."}, {"icon": "3️⃣", "label": "Thanh kiếm"}], "correct": 2, "speak": "Trong câu chuyện “ Sự tích Hồ Gươm” người đánh cá kéo được thứ gì dưới dòng sông lên?  Một: Con cá to  Hai: Con rùa vàng.  Ba: Thanh kiếm "},
+  {"id": "34", "img": "vi/cau34.png", "question": "Trong câu chuyện “cáo thỏ và gà trống” ai đuổi được cáo ra khỏi nhà thỏ?", "choices": [{"icon": "1️⃣", "label": "Bầy chó"}, {"icon": "2️⃣", "label": "Gà trống."}, {"icon": "3️⃣", "label": "Bác gấu"}], "correct": 1, "speak": "Trong câu chuyện “cáo thỏ và gà trống” ai đuổi được cáo ra khỏi nhà thỏ?  Một: Bầy chó  Hai: Gà trống.  Ba: Bác gấu"},
+  {"id": "35", "img": "vi/cau35.png", "question": "Trong câu chuyện “ Cây khế ” chim Đại Bàng nói người anh may túi mấy gang để đựng vàng?", "choices": [{"icon": "1️⃣", "label": "6 gang"}, {"icon": "2️⃣", "label": "3 gang."}, {"icon": "3️⃣", "label": "9 gang"}], "correct": 1, "speak": "Trong câu chuyện “ Cây khế ” chim Đại Bàng nói người anh may túi mấy gang để đựng vàng?  Một: 6 gang  Hai: 3 gang.  Ba: 9 gang"},
+  {"id": "36", "img": "vi/cau36.png", "question": "Đâu là sản phẩm của nghề nông?", "choices": [{"icon": "1️⃣", "label": "Đồng lúa"}, {"icon": "2️⃣", "label": "Cá tươi."}, {"icon": "3️⃣", "label": "Kẹo Cu đơ"}], "correct": 0, "speak": "Đâu là sản phẩm của nghề nông?  Một: Đồng lúa  Hai: Cá tươi.  Ba: Kẹo Cu đơ"},
+  {"id": "37", "img": "vi/cau37.png", "question": "Đâu là trang phục của nghành điện lực?", "choices": [{"icon": "1️⃣", "label": "Bộ màu xanh đen"}, {"icon": "2️⃣", "label": "Bộ màu cam."}, {"icon": "3️⃣", "label": "Bộ màu vàng đất"}], "correct": 1, "speak": "Đâu là trang phục của nghành điện lực?  Một: Bộ màu xanh đen  Hai: Bộ màu cam.  Ba: Bộ màu vàng đất"},
+  {"id": "38", "img": "vi/cau38.png", "question": "Who is he?", "choices": [{"icon": "1️⃣", "label": "Farmer"}, {"icon": "2️⃣", "label": "Doctor."}, {"icon": "3️⃣", "label": "Teacher"}], "correct": 1, "speak": "Who is he?  Một: Farmer  Hai: Doctor.  Ba: Teacher"},
+  {"id": "39", "img": "vi/cau39.png", "question": "Đâu là biển cảnh báo bề mặt trơn dễ té ngã?", "choices": [{"icon": "1️⃣", "label": "Ảnh số 1"}, {"icon": "2️⃣", "label": "Ảnh số 2"}, {"icon": "3️⃣", "label": "Ảnh số 3"}], "correct": 1, "speak": "Đâu là biển cảnh báo bề mặt trơn dễ té ngã?  Một: Ảnh số 1  Hai: Ảnh số 2  Ba: Ảnh số 3"},
+  {"id": "40", "img": "vi/cau40.png", "question": "Đồng hồ đang chỉ vào mấy giờ?", "choices": [{"icon": "1️⃣", "label": "12 giờ"}, {"icon": "2️⃣", "label": "2 giờ"}, {"icon": "3️⃣", "label": "10 giờ"}], "correct": 2, "speak": "Đồng hồ đang chỉ vào mấy giờ?  Một: 12 giờ   Hai: 2 giờ  Ba: 10 giờ"},
+  {"id": "41", "img": "vi/cau41.png", "question": "Tên gọi khác của Thành phố Hà Tĩnh gắn liền với tên của một loài hoa?", "choices": [{"icon": "1️⃣", "label": "Hoa Phượng đỏ"}, {"icon": "2️⃣", "label": "Thành Sen"}], "correct": 1, "speak": "Tên gọi khác của Thành phố Hà Tĩnh gắn liền với tên của một loài hoa?  Một: Hoa Phượng đỏ   Hai: Thành Sen"},
+  {"id": "42", "img": null, "question": "Hãy nghe đoán xem tên bài hát là gì?", "choices": [{"icon": "1️⃣", "label": "Cả nhà thương nhau"}, {"icon": "2️⃣", "label": "Ba thương con"}], "correct": 0, "speak": "Hãy nghe đoán xem tên bài hát là gì?  Một: Cả nhà thương nhau  Hai: Ba thương con", "media": "music_42", "emoji": "🎵"},
+  {"id": "43", "img": null, "question": "Hãy nghe âm thanh và đoán tên nhạc cụ?", "choices": [{"icon": "1️⃣", "label": "Xắc xô"}, {"icon": "2️⃣", "label": "Trống"}, {"icon": "3️⃣", "label": "Đàn ghi ta"}], "correct": 2, "speak": "Hãy nghe âm thanh và đoán tên nhạc cụ?  Một: Xắc xô   Hai: Trống  Ba: Đàn ghi ta", "media": "music_43", "emoji": "🎶"},
+  {"id": "44", "img": "vi/cau44.png", "question": "Nét tròn em đọc chữ ", "choices": [{"icon": "1️⃣", "label": "Chữ O"}, {"icon": "2️⃣", "label": "Chữ C"}, {"icon": "3️⃣", "label": "Chữ Ô"}], "correct": 1, "speak": "Nét tròn em đọc chữ o Khuyết đi một nửa sẽ cho chữ gì?  Một: Chữ O   Hai: Chữ C  Ba: Chữ Ô"},
+  {"id": "45", "img": "vi/cau45.png", "question": "Trong chữ “ Hoa Hồng” còn thiếu chữ cái nào?", "choices": [{"icon": "1️⃣", "label": "a"}, {"icon": "2️⃣", "label": "o"}, {"icon": "3️⃣", "label": "n"}], "correct": 1, "speak": "Trong chữ “ Hoa Hồng” còn thiếu chữ cái nào?  Một: a   Hai: o  Ba: n"},
+  {"id": "46", "img": "vi/cau46.png", "question": "Em bé đang cầm chùm bóng bay bằng tay nào?", "choices": [{"icon": "1️⃣", "label": "Tay phải"}, {"icon": "2️⃣", "label": "Tay trái"}], "correct": 1, "speak": "Em bé đang cầm chùm bóng bay bằng tay nào?  Một: Tay phải  Hai: Tay trái"},
+  {"id": "47", "img": "vi/cau47.png", "question": "Hôm nay là thứ Bảy thì hôm qua là thứ mấy?", "choices": [{"icon": "1️⃣", "label": "Chủ nhật"}, {"icon": "2️⃣", "label": "Thứ sáu"}, {"icon": "3️⃣", "label": "Thứ hai"}], "correct": 1, "speak": "Hôm nay là thứ Bảy thì hôm qua là thứ mấy?  Một: Chủ nhật  Hai: Thứ sáu  Ba: Thứ hai", "emoji": "📅"},
+  {"id": "48", "img": "vi/cau48.png", "question": "Điền vào ô trống hình ảnh thích hợp?", "choices": [{"icon": "1️⃣", "label": "Hình 1"}, {"icon": "2️⃣", "label": "Hình 2"}, {"icon": "3️⃣", "label": "Hình ba"}], "correct": 1, "speak": "Điền vào ô trống hình ảnh thích hợp?  Một: Hình 1  Hai: Hình 2  Ba: Hình ba"},
+  {"id": "49", "img": "vi/cau49.png", "question": "Khối vuông có bao nhiêu mặt?", "choices": [{"icon": "1️⃣", "label": "4 mặt"}, {"icon": "2️⃣", "label": "6 mặt"}, {"icon": "3️⃣", "label": "8 mặt"}], "correct": 1, "speak": "Khối vuông có bao nhiêu mặt?  Một: 4 mặt  Hai: 6 mặt  Ba: 8 mặt"},
+  {"id": "50", "img": "vi/cau50.png", "question": "Có bao nhiêu hình vuông trong bức tranh dưới đây?", "choices": [{"icon": "1️⃣", "label": "8 hình"}, {"icon": "2️⃣", "label": "7 hình"}, {"icon": "3️⃣", "label": "6 hình"}], "correct": 0, "speak": "Có bao nhiêu hình vuông trong bức tranh dưới đây?  Một: 8 hình  Hai: 7 hình  Ba: 6 hình"},
+  {"id": "51", "img": "vi/cau51.png", "question": "Làm thế nào để quả trứng nổi lên?", "choices": [{"icon": "1️⃣", "label": "Cho giấm vào"}, {"icon": "2️⃣", "label": "Cho dầu ăn vào"}, {"icon": "3️⃣", "label": "Cho muối vào"}], "correct": 2, "speak": "Làm thế nào để quả trứng nổi lên?  Một: Cho giấm vào  Hai: Cho dầu ăn vào  Ba: Cho muối vào"},
+  {"id": "52", "img": "vi/cau52.png", "question": "Linh vật của SEA Games 31 là gì?", "choices": [{"icon": "1️⃣", "label": "Trâu vàng"}, {"icon": "2️⃣", "label": "Sao la"}, {"icon": "3️⃣", "label": "Hổ Rimau"}], "correct": 1, "speak": "Linh vật của SEA Games 31 là gì?  Một: Trâu vàng  Hai: Sao la  Ba: Hổ Rimau"},
+  {"id": "53", "img": "vi/cau53.png", "question": "Chọn hình thích hợp điền vào ô trống?", "choices": [{"icon": "1️⃣", "label": "Hình 1"}, {"icon": "2️⃣", "label": "Hình 2"}, {"icon": "3️⃣", "label": "Hình 3"}], "correct": 0, "speak": "Chọn hình thích hợp điền vào ô trống?  Một: Hình 1  Hai: Hình 2  Ba: Hình 3"},
+  {"id": "54", "img": "vi/cau54.png", "question": "Điền hình thích hợp vào dấu chẩm hỏi?", "choices": [{"icon": "1️⃣", "label": "hình tròn"}, {"icon": "2️⃣", "label": "hình ngôi sao"}, {"icon": "3️⃣", "label": "Hình mặt trời"}], "correct": 1, "speak": "Điền hình thích hợp vào dấu chẩm hỏi?  Một: hình tròn  Hai: hình ngôi sao  Ba: Hình mặt trời"},
 ];
 
 ${GAME_SCRIPT_VI}
@@ -695,7 +762,7 @@ ${GAME_SCRIPT_VI}
 const GAME_SCRIPT_EN = `
 let currentIdx=0,answered={},timerInterval=null,timeLeft=5,countdownRunning=false;
 let gameMode='practice',compScore=0,selectedChoice=-1,answerRevealed=false;
-let introMusicEnabled=true,shuffledChoices=[],shuffledCorrect=-1,mediaReady=false;
+let introMusicEnabled=true,shuffledChoices=[],shuffledCorrects=[],mediaReady=false;
 const TTS_LANG='en-US';
 ${GAME_SHARED_LOGIC(30, 'en-US', true)}
 `
@@ -703,9 +770,9 @@ ${GAME_SHARED_LOGIC(30, 'en-US', true)}
 const GAME_SCRIPT_VI = `
 let currentIdx=0,answered={},timerInterval=null,timeLeft=5,countdownRunning=false;
 let gameMode='practice',compScore=0,selectedChoice=-1,answerRevealed=false;
-let introMusicEnabled=true,shuffledChoices=[],shuffledCorrect=-1,mediaReady=false;
+let introMusicEnabled=true,shuffledChoices=[],shuffledCorrects=[],mediaReady=false;
 const TTS_LANG='vi-VN';
-${GAME_SHARED_LOGIC(30, 'vi-VN', false)}
+${GAME_SHARED_LOGIC(54, 'vi-VN', true)}
 `
 
 function GAME_SHARED_LOGIC(totalQ: number, ttsLang: string, hasMedia: boolean): string {
@@ -719,6 +786,24 @@ function GAME_SHARED_LOGIC(totalQ: number, ttsLang: string, hasMedia: boolean): 
     bg.appendChild(s);
   }
 })();
+const IS_EN = TTS_LANG === 'en-US';
+const TXT = {
+  ttsReady: IS_EN ? '🔊 Ready' : '🔊 Sẵn sàng',
+  ttsReading: IS_EN ? '🔊 Reading...' : '🔊 Đang đọc...',
+  ttsDone: IS_EN ? '✅ Done reading' : '✅ Đã đọc xong',
+  ttsError: IS_EN ? '🔇 TTS error' : '🔇 TTS lỗi',
+  question: IS_EN ? 'Question' : 'Câu',
+  practice: IS_EN ? '📚 Practice' : '📚 Luyện tập',
+  competition: IS_EN ? '🏆 Competition' : '🏆 Thi đấu',
+  correctWord: IS_EN ? 'correct' : 'đúng',
+  answerPrefix: IS_EN ? 'The correct answer is: ' : 'Đáp án đúng là: ',
+  finishedPrefix: IS_EN ? 'Finished! You got ' : 'Kết thúc! Bé đã trả lời đúng ',
+  overWord: IS_EN ? ' out of ' : ' trên ',
+  qWord: IS_EN ? ' questions. ' : ' câu. ',
+  excellent: IS_EN ? 'Excellent!' : 'Xuất sắc!',
+  good: IS_EN ? 'Great job!' : 'Tốt lắm!',
+  keepTrying: IS_EN ? 'Keep trying!' : 'Cố gắng lên nhé!'
+};
 
 function flashLightning(){const el=document.getElementById('lightning');el.style.display='block';setTimeout(()=>el.style.display='none',150);}
 function spawnParticles(x,y,n=10){const cols=['#FFD700','#FFA500','#FF6B35','#00ff88','#00bfff','#ff69b4'];for(let i=0;i<n;i++){const p=document.createElement('div');p.className='particle';const sz=Math.random()*10+5,d=Math.random()*2+1.5,c=cols[Math.floor(Math.random()*cols.length)];p.style.cssText='width:'+sz+'px;height:'+sz+'px;background:'+c+';left:'+(x+(Math.random()-.5)*120)+'px;top:'+y+'px;animation-duration:'+d+'s';document.body.appendChild(p);setTimeout(()=>p.remove(),d*1000);}}
@@ -733,6 +818,46 @@ function playCountdownEnd(){try{const ctx=new(window.AudioContext||window.webkit
 function playCorrect(){try{const ctx=new(window.AudioContext||window.webkitAudioContext)();const notes=[523,659,784,1047];notes.forEach((freq,i)=>{setTimeout(()=>{const osc=ctx.createOscillator(),g=ctx.createGain();osc.type='sine';osc.connect(g);g.connect(ctx.destination);osc.frequency.setValueAtTime(freq,ctx.currentTime);g.gain.setValueAtTime(0.28,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+.25);osc.start();osc.stop(ctx.currentTime+.25);},i*120);});}catch(e){}}
 function playWrong(){try{const ctx=new(window.AudioContext||window.webkitAudioContext)();const osc=ctx.createOscillator(),g=ctx.createGain();osc.type='sawtooth';osc.connect(g);g.connect(ctx.destination);osc.frequency.setValueAtTime(220,ctx.currentTime);osc.frequency.setValueAtTime(140,ctx.currentTime+.28);g.gain.setValueAtTime(0.25,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+.55);osc.start();osc.stop(ctx.currentTime+.55);}catch(e){}}
 
+
+let currentAudio = null;
+let popupAudioUrl = '';
+function playAudioOnly(url, onEnd) {
+    if(currentAudio) { currentAudio.pause(); currentAudio.removeAttribute('src'); currentAudio.load(); currentAudio = null; }
+    currentAudio = new Audio(url);
+    currentAudio.onended = () => {
+        setTTSStatus(TXT.ttsDone);
+        if(onEnd) onEnd();
+    };
+    currentAudio.onerror = () => {
+        console.warn('Audio file not found: ' + url);
+        setTTSStatus('🔇 Không tìm thấy file âm thanh');
+        if(onEnd) onEnd();
+    };
+    currentAudio.play().catch(e => {
+        console.warn('Playback prevented: ' + url, e);
+        setTTSStatus('🔇 Không thể phát âm thanh');
+        if(onEnd) onEnd();
+    });
+}
+function playAudioOrTTS(url, ttsScript, onEnd) {
+    if(currentAudio) { currentAudio.pause(); currentAudio.removeAttribute('src'); currentAudio.load(); currentAudio = null; }
+    currentAudio = new Audio(url);
+    currentAudio.onended = () => {
+        if(onEnd) onEnd();
+    };
+    currentAudio.onerror = () => {
+        console.warn('Audio file not found: ' + url + ' - falling back to TTS');
+        speakText(ttsScript, onEnd);
+    };
+    currentAudio.play().catch(e => {
+        console.warn('Playback prevented: ' + url, e);
+        speakText(ttsScript, onEnd);
+    });
+}
+function stopAudio() {
+    if(currentAudio) { currentAudio.pause(); currentAudio.removeAttribute('src'); currentAudio.load(); currentAudio = null; }
+    stopTTS();
+}
 let ttsEnabled=!!window.speechSynthesis;
 function speakText(text,onEnd){
   if(!ttsEnabled||!window.speechSynthesis)return;
@@ -743,26 +868,42 @@ function speakText(text,onEnd){
   const v=voices.find(x=>x.lang.startsWith('${ttsLang.split('-')[0]}')&&x.name.toLowerCase().includes('female'))
           ||voices.find(x=>x.lang.startsWith('${ttsLang.split('-')[0]}'));
   if(v)utt.voice=v;
-  utt.onend=()=>{setTTSStatus('✅ Đã đọc xong');if(onEnd)onEnd();};
-  utt.onerror=()=>{setTTSStatus('🔇 TTS lỗi');};
+  utt.onend=()=>{setTTSStatus(TXT.ttsDone);if(onEnd)onEnd();};
+  utt.onerror=()=>{setTTSStatus(TXT.ttsError);};
   window.speechSynthesis.speak(utt);
-  setTTSStatus('🔊 Đang đọc...');
+  setTTSStatus(TXT.ttsReading);
 }
 function speakQuestion(){
   if(!currentQ())return;
   const script=shuffledChoices.length>0?buildTTSScript(currentQ(),shuffledChoices):currentQ().speak;
-  speakText(script);
+  
+  const isViet = (TTS_LANG === 'vi-VN');
+  if(isViet) {
+      setTTSStatus(TXT.ttsReading);
+      const soundUrl = '/assets/audio/vi/cau' + currentQ().id + '.wav';
+      playAudioOnly(soundUrl);
+  } else {
+      speakText(script);
+  }
 }
-function stopTTS(){if(window.speechSynthesis)window.speechSynthesis.cancel();setTTSStatus('🔊 Sẵn sàng');}
+function stopTTS(){if(window.speechSynthesis)window.speechSynthesis.cancel();setTTSStatus(TXT.ttsReady);}
 function setTTSStatus(txt){const el=document.getElementById('tts-status');if(el)el.textContent=txt;}
 function currentQ(){return Q[currentIdx];}
 if(window.speechSynthesis){window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();window.speechSynthesis.getVoices();}
+function setLionPopupContent(title, subtitle, replayLabel){
+  const t=document.getElementById('lion-popup-title');
+  const s=document.getElementById('lion-popup-subtitle');
+  const b=document.getElementById('lion-popup-replay-btn');
+  if(t)t.textContent=title;
+  if(s)s.textContent=subtitle;
+  if(b)b.textContent=replayLabel;
+}
 
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
-function showIntro(){clearTimer();stopTTS();closeAnswer();showScreen('screen-intro');introMusicEnabled=true;playIntroMusic();}
-function showRules(){stopIntroMusic();introMusicEnabled=false;stopTTS();showScreen('screen-rules');}
-function showGrid(){clearTimer();stopTTS();closeAnswer();buildGrid();showScreen('screen-grid');updateProgress();}
-function goBack(){clearTimer();stopTTS();showGrid();}
+function showIntro(){clearTimer();stopAudio();closeAnswer();showScreen('screen-intro');introMusicEnabled=true;playIntroMusic();}
+function showRules(){stopIntroMusic();introMusicEnabled=false;stopAudio();showScreen('screen-rules');}
+function showGrid(){clearTimer();stopAudio();stopIntroMusic();introMusicEnabled=false;closeAnswer();buildGrid();showScreen('screen-grid');updateProgress();}
+function goBack(){clearTimer();stopAudio();showGrid();}
 
 function buildGrid(){
   const grid=document.getElementById('question-grid');grid.innerHTML='';
@@ -772,50 +913,57 @@ function buildGrid(){
     cell.className='q-cell'+(done?(correct?' done':' done wrong-done'):'');
     cell.id='qcell-'+i;
     cell.innerHTML='<span class="q-num">'+(i+1)+'</span><span class="q-check">'+(correct?'✓':'✗')+'</span>';
-    cell.title='Câu '+(i+1)+': '+q.question;
-    cell.onclick=()=>{gameMode='practice';openQuestion(i);};
+    cell.title=(IS_EN?'Question ':'Câu ')+(i+1)+': '+q.question;
+    cell.onclick=()=>{console.log('Grid Cell clicked', i); gameMode='practice';openQuestion(i);};
     grid.appendChild(cell);
   });
 }
 function updateProgress(){
   const done=Object.keys(answered).length,correct=Object.values(answered).filter(v=>v===true).length;
-  document.getElementById('progress-text').textContent=done+'/'+${totalQ}+' | ✅'+correct;
+  document.getElementById('progress-text').textContent=done+'/'+${totalQ}+' | ✅ '+correct+' '+TXT.correctWord;
 }
-function startCompetition(){answered={};compScore=0;gameMode='competition';currentIdx=0;buildGrid();updateProgress();openQuestion(0);}
+function startCompetition(){console.log("startCompetition clicked"); stopIntroMusic();introMusicEnabled=false;answered={};compScore=0;gameMode='competition';currentIdx=0;buildGrid();updateProgress();openQuestion(0);}
 function resetProgress(){answered={};compScore=0;gameMode='practice';buildGrid();updateProgress();}
 
 function openQuestion(idx){
+  console.log("openQuestion started with idx:", idx);
   currentIdx=idx;selectedChoice=-1;answerRevealed=false;
-  clearTimer();stopTTS();closeAnswer();
+  clearTimer();stopAudio();closeAnswer();
   const q=Q[idx];
-  document.getElementById('q-num-badge').textContent='Câu '+(idx+1)+'/'+${totalQ};
+  console.log("Q fetched:", q);
+  document.getElementById('q-num-badge').textContent=TXT.question+' '+(idx+1)+'/'+${totalQ};
   if(gameMode==='competition'){
-    document.getElementById('mode-badge').textContent='🏆 Thi đấu';
+    document.getElementById('mode-badge').textContent=TXT.competition;
     document.getElementById('mode-badge').style.cssText='background:rgba(0,200,80,.25);border:2px solid rgba(0,255,130,.5);color:#00ff88';
     document.getElementById('q-score-live').style.display='';
-    document.getElementById('q-score-live').textContent='✅ '+compScore+' đúng';
+    document.getElementById('q-score-live').textContent='✅ '+compScore+' '+TXT.correctWord;
   } else {
-    document.getElementById('mode-badge').textContent='📚 Luyện tập';
+    document.getElementById('mode-badge').textContent=TXT.practice;
     document.getElementById('mode-badge').style.cssText='background:rgba(255,100,0,.25);border:2px solid rgba(255,150,0,.5);color:#FFA500';
     document.getElementById('q-score-live').style.display='none';
   }
+  console.log("openQuestion phase 2");
   const vWrap=document.getElementById('q-visual-wrap');
   if(q.img){vWrap.innerHTML='<img class="q-visual-img" src="/assets/images/'+q.img+'" alt="question image" loading="eager"><span class="q-visual-emoji" style="display:none">'+(q.emoji||'❓')+'</span>';}
   else{vWrap.innerHTML='<span class="q-visual-emoji">'+(q.emoji||'❓')+'</span>';}
   document.getElementById('q-text-main').textContent=q.question;
-  document.getElementById('q-hint').textContent=q.hint?'('+q.hint+')':'';
+  document.getElementById('q-hint').textContent=(!IS_EN&&q.hint)?'('+q.hint+')':'';
   
   ${hasMedia ? `
-  const mw=document.getElementById('media-btn-wrap');
+    const mw=document.getElementById('media-btn-wrap');
   const mb=document.getElementById('play-media-btn');
-  if(q.media==='lion'){mw.style.display='flex';mb.innerHTML='🦁 Nghe tiếng sư tử!';}
-  else if(q.media==='gummy'){mw.style.display='flex';mb.innerHTML='🐻 Xem Gummy Bear!';}
+  if(q.media==='lion'){mw.style.display='flex';mb.innerHTML=IS_EN?'🦁 Listen to lion sound!':'🦁 Nghe tiếng sư tử!';}
+  else if(q.media==='gummy'){mw.style.display='flex';mb.innerHTML=IS_EN?'🐻 Watch Gummy Bear!':'🐻 Xem Gummy Bear!';}
+  else if(q.media==='music_42'){mw.style.display='flex';mb.innerHTML=IS_EN?'🎵 Listen to the song!':'🎵 Nghe ca nhà thương nhau!';}
+  else if(q.media==='music_43'){mw.style.display='flex';mb.innerHTML=IS_EN?'🎶 Listen to instrument sound!':'🎶 Nghe nhạc cụ!';}
   else{mw.style.display='none';}
   mediaReady=!q.media;
   ` : `mediaReady=true;`}
 
-  shuffledChoices=buildShuffledChoices(q);
-  shuffledCorrect=shuffledChoices.findIndex(c=>c.origIdx===q.correct);
+  shuffledChoices=buildChoicesForQuestion(q);
+  const sourceCorrect=Array.isArray(q.correct)?q.correct:[q.correct];
+  shuffledCorrects=shuffledChoices.map((c,i)=>sourceCorrect.includes(c.origIdx)?i:-1).filter(i=>i>=0);
+  console.log("openQuestion phase 3, shuffledCorrects:", shuffledCorrects);
   const cont=document.getElementById('choices-container');cont.innerHTML='';
   shuffledChoices.forEach((ch,i)=>{
     const btn=document.createElement('div');btn.className='choice-btn';btn.id='choice-'+i;
@@ -824,30 +972,43 @@ function openQuestion(idx){
   });
   timeLeft=5;countdownRunning=false;updateTimerBar();
   document.getElementById('btn-countdown').textContent='▶ 5s';
-  setTTSStatus('🔊 Đang đọc...');
+  setTTSStatus(TXT.ttsReading);
   const actionBtn=document.getElementById('btn-action-next');
   if(actionBtn)actionBtn.textContent='➡ NEXT';
+  console.log("About to call showScreen(screen-question)");
   showScreen('screen-question');
   const ttsScript=buildTTSScript(q,shuffledChoices);
   if(gameMode==='competition'){
     setTimeout(()=>{
-      speakText(ttsScript,()=>{
-        ${hasMedia ? `if(q.media){setTimeout(()=>playSpecialMedia(),400);}else{setTimeout(()=>startCountdown(),400);}` : `setTimeout(()=>startCountdown(),400);`}
-      });
+      if(IS_EN){
+        speakText(ttsScript,()=>{
+          ${hasMedia ? `if(q.media){setTimeout(()=>playSpecialMedia(),400);}else{setTimeout(()=>startCountdown(),400);}` : `setTimeout(()=>startCountdown(),400);`}
+        });
+      }else{
+        const soundUrl='/assets/audio/vi/cau'+q.id+'.wav';
+        playAudioOnly(soundUrl,()=>{
+          ${hasMedia ? `if(q.media){setTimeout(()=>playSpecialMedia(),400);}else{setTimeout(()=>startCountdown(),400);}` : `setTimeout(()=>startCountdown(),400);`}
+        });
+      }
     },300);
   } else {
-    setTimeout(()=>speakText(ttsScript),300);
+    setTimeout(()=>{
+      if(IS_EN){speakText(ttsScript);}
+      else{playAudioOnly('/assets/audio/vi/cau'+q.id+'.wav');}
+    },300);
   }
 }
 
 function buildTTSScript(q,shuffled){
-  const nums=['Một','Hai','Ba'];
+  const nums=IS_EN?['One','Two','Three']:['Một','Hai','Ba'];
   const choiceText=shuffled.map((c,i)=>nums[i]+': '+c.label).join('. ');
   return q.question+'. '+choiceText+'.';
 }
-function buildShuffledChoices(q){
+function buildChoicesForQuestion(q){
   const arr=q.choices.map((c,i)=>({...c,origIdx:i}));
-  for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+  if(IS_EN){
+    for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+  }
   return arr;
 }
 
@@ -897,20 +1058,20 @@ function selectChoice(i){
 
 function revealAnswer(){
   if(answerRevealed)return;answerRevealed=true;
-  const q=currentQ();clearTimer();stopTTS();
+  const q=currentQ();clearTimer();stopAudio();
   const btns=document.querySelectorAll('.choice-btn');
-  btns.forEach((b,i)=>{b.classList.remove('selected');b.classList.add('locked');if(i===shuffledCorrect)b.classList.add('correct');else b.classList.add('wrong');});
-  const isCorrect=(selectedChoice===shuffledCorrect);
+  btns.forEach((b,i)=>{b.classList.remove('selected');b.classList.add('locked');if(shuffledCorrects.includes(i))b.classList.add('correct');else b.classList.add('wrong');});
+  const isCorrect=shuffledCorrects.includes(selectedChoice);
   answered[currentIdx]=isCorrect;
   if(gameMode==='competition'&&isCorrect)compScore++;
   updateProgress();
   const cell=document.getElementById('qcell-'+currentIdx);
   if(cell){cell.classList.add('done');if(!isCorrect)cell.classList.add('wrong-done');cell.querySelector('.q-check').textContent=isCorrect?'✓':'✗';}
-  if(gameMode==='competition'){document.getElementById('q-score-live').textContent='✅ '+compScore+' đúng';}
+  if(gameMode==='competition'){document.getElementById('q-score-live').textContent='✅ '+compScore+' '+TXT.correctWord;}
   if(isCorrect){playCorrect();screenFlash('correct');spawnParticles(window.innerWidth/2,window.innerHeight*.4,16);fireworks(10);}
   else{playWrong();screenFlash('wrong');}
-  const correctShuffled=shuffledChoices[shuffledCorrect];
-  const answerDisplay=(shuffledCorrect+1)+'. '+correctShuffled.label;
+  const correctShuffled=shuffledCorrects.map(i=>({idx:i,choice:shuffledChoices[i]})).filter(x=>x.choice);
+  const answerDisplay=correctShuffled.map(x=>(x.idx+1)+'. '+x.choice.label).join(' | ');
   document.getElementById('answer-text-display').textContent=answerDisplay;
   document.getElementById('answer-emoji').textContent=isCorrect?'🎊':'😅';
   const isLast=currentIdx>=Q.length-1;
@@ -918,55 +1079,106 @@ function revealAnswer(){
   document.getElementById('btn-next').textContent=nextLabel;
   const actionBtn=document.getElementById('btn-action-next');if(actionBtn)actionBtn.textContent=nextLabel;
   document.getElementById('answer-overlay').classList.add('active');
-  setTimeout(()=>speakText('Đáp án đúng là: '+correctShuffled.label),300);
+  
+  const isViet = (TTS_LANG === 'vi-VN');
+  const ttsScript = TXT.answerPrefix + correctShuffled.map(x=>x.choice.label).join('. ');
+  if(isViet) {
+      setTimeout(() => {
+          const soundUrl = '/assets/audio/vi/cau' + q.id + '_ans.wav';
+          playAudioOnly(soundUrl);
+      }, 300);
+  } else {
+      setTimeout(() => speakText(ttsScript), 300);
+  }
 }
 function closeAnswer(){document.getElementById('answer-overlay').classList.remove('active');}
 function handleNextBtn(){if(!answerRevealed){revealAnswer();}else{nextQuestion();}}
 function nextQuestion(){
-  closeAnswer();stopTTS();
+  closeAnswer();stopAudio();
   if(gameMode==='competition'){const next=currentIdx+1;if(next>=Q.length){showResultPopup();return;}openQuestion(next);}
   else{let next=currentIdx+1;if(next>=Q.length){showGrid();return;}openQuestion(next);}
 }
 
 ${hasMedia ? `
-function playLionSound(){const a=document.getElementById('audio-lion');a.volume=0.9;a.currentTime=0;a.play().catch(()=>{});}
-function stopLionSound(){const a=document.getElementById('audio-lion');a.pause();a.currentTime=0;}
-function replayLionSound(){playLionSound();}
+function playLionSound(){const a=document.getElementById('audio-lion');if(a){a.volume=0.9;a.currentTime=0;a.play().catch(()=>{});}}
+function stopLionSound(){const a=document.getElementById('audio-lion');if(a){a.pause();a.currentTime=0;}}
+function replayLionSound(){
+  if(popupAudioUrl){playAudioOnly(popupAudioUrl);}
+  else{playLionSound();}
+}
 function playSpecialMedia(){
   const q=currentQ();
-  if(q.media==='lion'){document.getElementById('lion-overlay').classList.add('active');playLionSound();}
+  if(q.media==='lion'){
+    popupAudioUrl='';
+    setLionPopupContent(
+      IS_EN?'LION SOUND!':'TIẾNG SƯ TỬ!',
+      IS_EN?'Listen and guess the animal':'Nghe âm thanh — đây là con gì?',
+      IS_EN?'🔊 Replay':'🔊 Nghe lại'
+    );
+    document.getElementById('lion-overlay').classList.add('active');
+    playLionSound();
+  }
   else if(q.media==='gummy'){const ov=document.getElementById('media-overlay'),vid=document.getElementById('media-video');vid.src='/assets/gummy-bear.mp4';ov.classList.add('active');vid.play().catch(()=>{});}
+  else if(q.media==='music_42'){
+      popupAudioUrl='/assets/audio/vi/cau42-ca-nha-thuong-nhau.mp3';
+      setLionPopupContent(
+        'NGHE BÀI HÁT!',
+        'Nghe xong hãy chọn đáp án đúng',
+        '🔊 Nghe lại'
+      );
+      document.getElementById('lion-overlay').classList.add('active');
+      playAudioOnly(popupAudioUrl);
+  }
+  else if(q.media==='music_43'){
+      popupAudioUrl='/assets/audio/vi/cau43_music.wav';
+      setLionPopupContent(
+        'NGHE NHẠC CỤ!',
+        'Nghe xong hãy chọn đáp án đúng',
+        '🔊 Nghe lại'
+      );
+      document.getElementById('lion-overlay').classList.add('active');
+      playAudioOnly(popupAudioUrl);
+  }
 }
-function closeLionPopup(){document.getElementById('lion-overlay').classList.remove('active');stopLionSound();onMediaClosed();}
+function closeLionPopup(){
+  const ov=document.getElementById('lion-overlay');
+  if(ov)ov.classList.remove('active');
+  stopLionSound();
+  stopAudio();
+  popupAudioUrl='';
+  onMediaClosed();
+}
 function closeMedia(){document.getElementById('media-video').pause();document.getElementById('media-overlay').classList.remove('active');onMediaClosed();}
 function revealAnswerFromMedia(){closeMedia();}
 function onMediaClosed(){if(mediaReady)return;mediaReady=true;if(gameMode==='competition'&&!answerRevealed&&!countdownRunning){setTimeout(()=>startCountdown(),300);}}
 ` : ``}
 
 function showResultPopup(){
-  clearTimer();stopTTS();closeAnswer();
+  clearTimer();stopAudio();closeAnswer();
   const total=Q.length,correct=Object.values(answered).filter(v=>v===true).length;
   document.getElementById('popup-score-num').textContent=correct+'/'+total;
   const pct=Math.round((correct/total)*100);
-  let msg='🎉 Chúc mừng các bé! 🎉',sub='';
-  if(pct>=80){msg='🌟 Xuất sắc! Giỏi lắm! 🌟';sub='Bé đã trả lời đúng '+correct+' câu — Tuyệt vời!';}
-  else if(pct>=50){msg='👏 Tốt lắm! Cố gắng thêm nhé!';sub='Bé đã trả lời đúng '+correct+' câu!';}
-  else{msg='💪 Cố gắng lên nhé bé ơi!';sub='Luyện tập thêm để tiến bộ hơn!';}
+  let msg=IS_EN?'🎉 Great job! 🎉':'🎉 Chúc mừng các bé! 🎉',sub='';
+  if(pct>=80){msg=IS_EN?'🌟 Excellent! Amazing! 🌟':'🌟 Xuất sắc! Giỏi lắm! 🌟';sub=IS_EN?('You answered '+correct+' correctly — amazing!'):('Bé đã trả lời đúng '+correct+' câu — Tuyệt vời!');}
+  else if(pct>=50){msg=IS_EN?'👏 Nice work! Keep going!':'👏 Tốt lắm! Cố gắng thêm nhé!';sub=IS_EN?('You answered '+correct+' correctly!'):('Bé đã trả lời đúng '+correct+' câu!');}
+  else{msg=IS_EN?'💪 Keep trying! You can do it!':'💪 Cố gắng lên nhé bé ơi!';sub=IS_EN?'Practice a bit more to improve!':'Luyện tập thêm để tiến bộ hơn!';}
   document.getElementById('popup-msg').textContent=msg;
   document.getElementById('popup-sub').textContent=sub;
   document.getElementById('result-popup').classList.add('active');
   fireworks(20);setTimeout(()=>fireworks(15),800);
-  speakText('Kết thúc! Bé đã trả lời đúng '+correct+' trên '+total+' câu. '+(pct>=80?'Xuất sắc!':pct>=50?'Tốt lắm!':'Cố gắng lên nhé!'));
+  if(IS_EN){
+    speakText(TXT.finishedPrefix+correct+TXT.overWord+total+TXT.qWord+(pct>=80?TXT.excellent:pct>=50?TXT.good:TXT.keepTrying));
+  }
 }
 function closeResultPopup(){document.getElementById('result-popup').classList.remove('active');}
-function resetGame(){answered={};compScore=0;gameMode='practice';clearTimer();stopTTS();buildGrid();showGrid();}
+function resetGame(){answered={};compScore=0;gameMode='practice';clearTimer();stopAudio();buildGrid();showGrid();}
 function pikachuClick(){flashLightning();spawnParticles(window.innerWidth-50,window.innerHeight-60,12);playBeep(640,880,.4);const el=document.querySelector('.float-pika');el.style.transform='scale(2.2) rotate(20deg)';setTimeout(()=>el.style.transform='',500);}
 
 if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{});}
 document.getElementById('countdown-overlay').addEventListener('click',function(){this.classList.remove('active');document.getElementById('countdown-video').pause();});
 document.addEventListener('keydown',e=>{
   const onQ=document.getElementById('screen-question').classList.contains('active');
-  if(e.key==='Escape'){closeAnswer();${hasMedia?`closeMedia();document.getElementById('lion-overlay').classList.remove('active');`:''}closeResultPopup();document.getElementById('countdown-overlay').classList.remove('active');}
+  if(e.key==='Escape'){closeAnswer();${hasMedia?`closeMedia();closeLionPopup();`:''}closeResultPopup();document.getElementById('countdown-overlay').classList.remove('active');}
   if(e.key===' '&&onQ){e.preventDefault();startCountdown();}
   if(e.key==='Enter'&&onQ){e.preventDefault();revealAnswer();}
   if((e.key==='r'||e.key==='R')&&onQ){speakQuestion();}
@@ -975,6 +1187,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='2'&&onQ)selectChoice(1);
   if(e.key==='3'&&onQ)selectChoice(2);
 });
+showGrid();
 `
 }
 
